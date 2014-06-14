@@ -10,6 +10,9 @@
 #import "NSDictionary+ABXQueryString.h"
 #import "NSDictionary+ABXNSNullAsNull.h"
 
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <netdb.h>
+
 @interface ABXApiClient ()
 
 @property (nonatomic, strong) NSURLSession *session;
@@ -223,5 +226,53 @@ static NSString *kAppbotUrl = @"https://api.appbot.co/v1";
     }
 }
 
++ (BOOL)isInternetReachable
+{
+    // http://stackoverflow.com/a/18071526
+    struct sockaddr_in zeroAddress;
+    bzero(&zeroAddress, sizeof(zeroAddress));
+    zeroAddress.sin_len = sizeof(zeroAddress);
+    zeroAddress.sin_family = AF_INET;
+    
+    SCNetworkReachabilityRef reachabilityRef = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *) &zeroAddress);
+    
+    SCNetworkReachabilityFlags flags;
+    if (reachabilityRef && SCNetworkReachabilityGetFlags(reachabilityRef, &flags)) {
+        if ((flags & kSCNetworkReachabilityFlagsReachable) == 0) {
+            // if target host is not reachable
+            CFRelease(reachabilityRef);
+            return NO;
+        }
+        
+        if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0) {
+            // if target host is reachable and no connection is required
+            //  then we'll assume (for now) that your on Wi-Fi
+            CFRelease(reachabilityRef);
+            return YES; // This is a wifi connection.
+        }
+        
+        
+        if ((((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0)
+             ||(flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0)) {
+            // ... and the connection is on-demand (or on-traffic) if the
+            //     calling application is using the CFSocketStream or higher APIs
+            
+            if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0) {
+                // ... and no [user] intervention is needed
+                CFRelease(reachabilityRef);
+                return YES; // This is a wifi connection.
+            }
+        }
+        
+        if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN) {
+            // ... but WWAN connections are OK if the calling application
+            //     is using the CFNetwork (CFSocketStream?) APIs.
+            CFRelease(reachabilityRef);
+            return YES; // This is a cellular connection.
+        }
+    }
+    
+    return NO;
+}
 
 @end

@@ -24,7 +24,13 @@
     
     self.title = NSLocalizedString(@"Versions", nil);
     
-    [self fetchVersions];
+    if (![ABXApiClient isInternetReachable]) {
+        [self.activityView stopAnimating];
+        [self showError:NSLocalizedString(@"There is no internet connection.\r\n\r\nPlease connect to continue.", nil)];
+    }
+    else {
+        [self fetchVersions];
+    }
 }
 
 - (void)didReceiveMemoryWarning

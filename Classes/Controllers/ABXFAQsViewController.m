@@ -39,7 +39,13 @@
     [self setupFaqUI];
     
     // Fetch
-    [self fetchFAQs];
+    if (![ABXApiClient isInternetReachable]) {
+        [self.activityView stopAnimating];
+        [self showError:NSLocalizedString(@"There is no internet connection.\r\n\r\nPlease connect to continue.", nil)];
+    }
+    else {
+        [self fetchFAQs];
+    }
 }
 
 - (void)didReceiveMemoryWarning

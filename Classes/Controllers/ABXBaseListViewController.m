@@ -105,14 +105,14 @@
 - (void)showError:(NSString*)error
 {
     if (!self.errorLabel) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, CGRectGetWidth(self.tableView.bounds) - 20, 100)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 150, CGRectGetWidth(self.tableView.bounds) - 20, 100)];
         label.textAlignment = NSTextAlignmentCenter;
         label.numberOfLines = 0;
         label.text = error;
         label.font = [UIFont systemFontOfSize:15];
         label.textColor = [UIColor blackColor];
         label.backgroundColor = [UIColor clearColor];
-        label.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.view addSubview:label];
         self.errorLabel = label;
     }

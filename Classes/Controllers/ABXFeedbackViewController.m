@@ -97,11 +97,23 @@ static NSInteger const kCloseAlert = 1;
     }
     
     if (self.textField.text.length > 0) {
+        // There is an email set, start on the details
         [self.textView becomeFirstResponder];
     }
     else {
+        // Start on the email
         [self.textField becomeFirstResponder];
     }
+    
+    // Warn if there is no internet connection
+    if (![ABXApiClient isInternetReachable]) {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Internet.", nil)
+                                    message:NSLocalizedString(@"There is no internet connection.\r\n\r\nPlease connect to continue.", nil)
+                                   delegate:nil
+                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil] show];
+    }
+    
 }
 
 + (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email

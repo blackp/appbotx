@@ -24,6 +24,8 @@ typedef void (^ABXRequestCompletion)(ABXResponseCode responseCode, NSInteger htt
 
 + (ABXApiClient*)instance;
 
++ (BOOL)isInternetReachable;
+
 - (void)setApiKey:(NSString *)apiKey;
 
 - (NSURLSessionDataTask*)GET:(NSString*)path params:(NSDictionary*)params complete:(ABXRequestCompletion)complete;
