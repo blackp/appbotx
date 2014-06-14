@@ -141,12 +141,25 @@ static NSInteger const kCloseAlert = 1;
 {
     CGRect keyboardWinRect = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
     
+    CGFloat topOffset = 0;
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+        // Determine the status bar size
+        CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+        CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
+        CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
+        
+        // Determine the navigation bar size
+        CGFloat navbarHeight = CGRectGetHeight(self.navigationController.navigationBar.frame);
+        
+        topOffset = CGRectGetHeight(statusBarViewRect) + navbarHeight;
+    }
+    
     // Convert it to suit us
-    CGRect keyboardRect = [self.view convertRect:keyboardWinRect fromView:self.view.window];
+    CGRect keyboardRect = [self.textView.superview convertRect:keyboardWinRect fromView:self.view.window];
     
     // Move the textView so the bottom doesn't extend beyound the keyboard
     CGRect tvFrame = self.textView.frame;
-    tvFrame.size.height = CGRectGetHeight(self.view.bounds) - (CGRectGetHeight(keyboardRect) + CGRectGetMinY(tvFrame));
+    tvFrame.size.height = CGRectGetHeight(self.textView.superview.bounds) - (CGRectGetHeight(keyboardRect) + CGRectGetMinY(tvFrame) + topOffset);
     self.textView.frame = tvFrame;
 }
 
