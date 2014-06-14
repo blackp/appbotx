@@ -40,6 +40,7 @@
 		E0C537C7192DCC7500858D01 /* ABXVersionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C537C6192DCC7500858D01 /* ABXVersionsViewController.m */; };
 		E0C537CA192DCDCB00858D01 /* ABXBaseListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C537C9192DCDCB00858D01 /* ABXBaseListViewController.m */; };
 		E0C537CD192E228D00858D01 /* ABXVersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C537CC192E228D00858D01 /* ABXVersionTableViewCell.m */; };
+		E0D0E076194D0A8400756042 /* ABXFAQTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D0E075194D0A8400756042 /* ABXFAQTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,8 @@
 		E0C537C9192DCDCB00858D01 /* ABXBaseListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXBaseListViewController.m; sourceTree = "<group>"; };
 		E0C537CB192E228D00858D01 /* ABXVersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXVersionTableViewCell.h; sourceTree = "<group>"; };
 		E0C537CC192E228D00858D01 /* ABXVersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXVersionTableViewCell.m; sourceTree = "<group>"; };
+		E0D0E074194D0A8400756042 /* ABXFAQTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXFAQTableViewCell.h; sourceTree = "<group>"; };
+		E0D0E075194D0A8400756042 /* ABXFAQTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXFAQTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +275,8 @@
 				E0369CF31938324C0082ADB7 /* ABXNotificationView.m */,
 				E0369CF7193869A90082ADB7 /* ABXPromptView.h */,
 				E0369CF8193869A90082ADB7 /* ABXPromptView.m */,
+				E0D0E074194D0A8400756042 /* ABXFAQTableViewCell.h */,
+				E0D0E075194D0A8400756042 /* ABXFAQTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -392,6 +397,7 @@
 				E039FD87192C2E3100BA0B76 /* NSDictionary+ABXQueryString.m in Sources */,
 				E0B113D419481EB2000E873E /* ABXNavigationController.m in Sources */,
 				E0C53782192CD74F00858D01 /* ABXFAQViewController.m in Sources */,
+				E0D0E076194D0A8400756042 /* ABXFAQTableViewCell.m in Sources */,
 				E0369CF9193869A90082ADB7 /* ABXPromptView.m in Sources */,
 				E0369CF41938324C0082ADB7 /* ABXNotificationView.m in Sources */,
 				E039FD58192C290E00BA0B76 /* main.m in Sources */,

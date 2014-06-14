@@ -10,6 +10,7 @@
 #import "ABXFaq.h"
 #import "ABXFAQViewController.h"
 #import "ABXFeedbackViewController.h"
+#import "ABXFAQTableViewCell.h"
 
 @interface ABXFAQsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
@@ -133,15 +134,13 @@
 {
     static NSString *CellIdentifier = @"FAQCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ABXFAQTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.font = [UIFont systemFontOfSize:15];
+        cell = [[ABXFAQTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     if (indexPath.row < self.filteredFaqs.count) {
-        cell.textLabel.text = [[self.filteredFaqs objectAtIndex:indexPath.row] question];
+        [cell setFAQ:[self.filteredFaqs objectAtIndex:indexPath.row]];
     }
     
     return cell;
@@ -149,7 +148,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    if (indexPath.row < self.filteredFaqs.count) {
+        return [ABXFAQTableViewCell heightForFAQ:[self.filteredFaqs objectAtIndex:indexPath.row]
+                                       withWidth:CGRectGetWidth(self.tableView.bounds)];
+    }
+    
+    return 0;
 }
 
 #pragma mark - UITableViewDelegate
