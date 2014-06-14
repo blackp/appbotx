@@ -39,16 +39,17 @@ static NSInteger const kCloseAlert = 1;
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
+    // Scroll view
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:scrollView];
     
     // Email label
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 90, 50)];
     label.textColor = [UIColor grayColor];
     label.text = NSLocalizedString(@"Your Email:", nil);
     label.font = [UIFont systemFontOfSize:15];
-    [self.view addSubview:label];
+    [scrollView addSubview:label];
     
     // Field for their email
     CGRect tfRect = CGRectMake(110, 0, CGRectGetWidth(self.view.frame) - 120, 50);
@@ -64,13 +65,13 @@ static NSInteger const kCloseAlert = 1;
     textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     textField.returnKeyType = UIReturnKeyNext;
     textField.delegate = self;
-    [self.view addSubview:textField];
+    [scrollView addSubview:textField];
     self.textField = textField;
     
     UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(20, 50, CGRectGetWidth(self.view.frame), [UIScreen mainScreen].scale >= 2.0f ? 0.5 : 1)];
     seperator.backgroundColor = [UIColor lightGrayColor];
     seperator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self.view addSubview:seperator];
+    [scrollView addSubview:seperator];
     
     // Text view
     self.textView = [[ABXTextView alloc] initWithFrame:CGRectMake(15, 51, CGRectGetWidth(self.view.frame) - 30, CGRectGetHeight(self.view.frame) - 51)];
@@ -78,7 +79,7 @@ static NSInteger const kCloseAlert = 1;
     self.textView.font = [UIFont systemFontOfSize:15];
     self.textView.placeholder = self.placeholder ?: NSLocalizedString(@"How can we help?", nil);
     self.textView.delegate = self;
-    [self.view addSubview:self.textView];
+    [scrollView addSubview:self.textView];
     
     // Title
     self.title = NSLocalizedString(@"Contact", nil);
