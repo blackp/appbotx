@@ -48,6 +48,17 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // Show the keyboard again if it was before
+    if (self.searchBar.text.length > 0) {
+        [self.searchBar becomeFirstResponder];
+        [self searchBar:self.searchBar textDidChange:self.searchBar.text];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -147,9 +158,17 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    ABXFAQViewController* controller = [[ABXFAQViewController alloc] init];
-    controller.faq = self.faqs[indexPath.row];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (indexPath.row < self.filteredFaqs.count) {
+        // Fix weird keyboard transition lag in iOS 7
+        if ([self.searchBar isFirstResponder]) {
+            [self.searchBar resignFirstResponder];
+        }
+        
+        // Show the details
+        ABXFAQViewController* controller = [[ABXFAQViewController alloc] init];
+        controller.faq = self.faqs[indexPath.row];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 #pragma mark - Search Bar
