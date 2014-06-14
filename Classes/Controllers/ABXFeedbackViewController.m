@@ -14,6 +14,8 @@
 
 @interface ABXFeedbackViewController ()<UITextViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
+@property (nonatomic, copy) NSString *defaultEmail;
+
 @property (nonatomic, strong) ABXTextView *textView;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) ABXKeychain *keychain;
@@ -84,9 +86,15 @@ static NSInteger const kCloseAlert = 1;
     // Buttons
     [self showButtons];
     
-    // Set the email from the keychain if has been entered before
-    self.keychain = [[ABXKeychain alloc] initWithService:@"appbot.co" accessGroup:nil accessibility:ABXKeychainAccessibleWhenUnlocked];
-    self.textField.text = self.keychain[@"FeedbackEmail"];
+    if (self.defaultEmail.length > 0) {
+        // An email has been provided
+        self.textField.text = self.defaultEmail;
+    }
+    else {
+        // Set the email from the keychain if has been entered before
+        self.keychain = [[ABXKeychain alloc] initWithService:@"appbot.co" accessGroup:nil accessibility:ABXKeychainAccessibleWhenUnlocked];
+        self.textField.text = self.keychain[@"FeedbackEmail"];
+    }
     
     if (self.textField.text.length > 0) {
         [self.textView becomeFirstResponder];
@@ -96,16 +104,22 @@ static NSInteger const kCloseAlert = 1;
     }
 }
 
-+ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder
++ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email
 {
     ABXFeedbackViewController *viewController = [[self alloc] init];
     viewController.placeholder = placeholder;
+    viewController.defaultEmail = email;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         // Show as a sheet on iPad
         nav.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     [controller presentViewController:nav animated:YES completion:nil];
+}
+
++ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder
+{
+    [self showFromController:controller placeholder:placeholder email:nil];
 }
 
 #pragma mark Keyboard

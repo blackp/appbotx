@@ -14,4 +14,7 @@
 
 + (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder;
 
+// Provide a custom email to default to
++ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email;
+
 @end
