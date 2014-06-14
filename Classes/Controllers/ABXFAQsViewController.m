@@ -175,7 +175,7 @@
     }
 }
 
-#pragma mark - Search Bar
+#pragma mark - UISearchBarDelegate
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
@@ -185,10 +185,6 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:NO animated:YES];
-    
-    self.errorLabel.hidden = YES;
-    self.filteredFaqs = self.faqs;
-    [self.tableView reloadData];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -214,6 +210,15 @@
 {
     [searchBar resignFirstResponder];
     searchBar.text = @"";
+    
+    self.errorLabel.hidden = YES;
+    self.filteredFaqs = self.faqs;
+    [self.tableView reloadData];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
 }
 
 @end
