@@ -81,11 +81,13 @@
     self.activityView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     [self.view addSubview:self.activityView];
     
-    // Close button
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                             initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                             target:self
-                                             action:@selector(onDone)];
+    // Only show the close button if we are at the root controller
+    if (self.navigationController.viewControllers.count == 1) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                                 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                 target:self
+                                                 action:@selector(onDone)];
+    }
 }
 
 #pragma mark - Buttons

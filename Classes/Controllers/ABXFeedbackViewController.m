@@ -152,7 +152,7 @@ static NSInteger const kCloseAlert = 1;
 
 - (void)showButtons
 {
-    if (self.navigationItem.leftBarButtonItem == nil) {
+    if (self.navigationItem.leftBarButtonItem == nil && self.navigationController.viewControllers.count == 1) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                               target:self
                                                                                               action:@selector(onDone)];
@@ -275,7 +275,9 @@ static NSInteger const kCloseAlert = 1;
         self.keychain[@"FeedbackEmail"] = self.textField.text;
     }
     
-    self.navigationItem.leftBarButtonItem = nil;
+    if (self.navigationController.viewControllers.count == 1) {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
     self.navigationItem.rightBarButtonItem = nil;
     
     UIView *overlay = [[UIView alloc] initWithFrame:self.view.bounds];
