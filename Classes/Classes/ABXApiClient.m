@@ -24,7 +24,8 @@
 
 @implementation ABXApiClient
 
-static NSString *kAppbotUrl = @"https://api.appbot.co/v1";
+//static NSString *kAppbotUrl = @"https://api.appbot.co/v1";
+static NSString *kAppbotUrl = @"http://api.appbot.test:3000/v1";
 
 + (ABXApiClient*)instance
 {

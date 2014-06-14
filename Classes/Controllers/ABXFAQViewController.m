@@ -68,6 +68,9 @@
                       "</body>", self.faq.question, self.faq.answer];
     [self.webview loadHTMLString:html
                          baseURL:nil];
+    
+    // Record a view, ignore the result
+    [self.faq recordView:nil];
 }
 
 - (void)didReceiveMemoryWarning

@@ -20,4 +20,6 @@
 - (NSURLSessionDataTask*)upvote:(void(^)(ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete;
 - (NSURLSessionDataTask*)downvote:(void(^)(ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete;
 
+- (NSURLSessionDataTask*)recordView:(void(^)(ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete;
+
 @end

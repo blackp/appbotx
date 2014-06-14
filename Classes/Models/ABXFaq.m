@@ -55,4 +55,15 @@ PROTECTED_ABXMODEL
                                }];
 }
 
+- (NSURLSessionDataTask*)recordView:(void(^)(ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete
+{
+    return [[ABXApiClient instance] GET:[NSString stringWithFormat:@"faqs/%@", _identifier]
+                                 params:nil
+                               complete:^(ABXResponseCode responseCode, NSInteger httpCode, NSError *error, id JSON) {
+                                   if (complete) {
+                                       complete(responseCode, httpCode, error);
+                                   }
+                               }];
+}
+
 @end
