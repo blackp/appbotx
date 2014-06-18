@@ -10,3 +10,6 @@
 #import "ABXFeedbackViewController.h"
 
 #import "ABXNotificationView.h"
+#import "ABXVersionNotificationView.h"
+
+#import "ABXAppStore.h"

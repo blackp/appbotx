@@ -12,6 +12,8 @@
 		E0369CEE193825210082ADB7 /* ABXTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0369CED193825210082ADB7 /* ABXTextView.m */; };
 		E0369CF41938324C0082ADB7 /* ABXNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0369CF31938324C0082ADB7 /* ABXNotificationView.m */; };
 		E0369CF9193869A90082ADB7 /* ABXPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0369CF8193869A90082ADB7 /* ABXPromptView.m */; };
+		E03971CC19515BAF000742B8 /* ABXVersionNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E03971CB19515BAF000742B8 /* ABXVersionNotificationView.m */; };
+		E03971CF19515C1C000742B8 /* ABXAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E03971CE19515C1C000742B8 /* ABXAppStore.m */; };
 		E039FD4C192C290E00BA0B76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E039FD4B192C290E00BA0B76 /* Foundation.framework */; };
 		E039FD4E192C290E00BA0B76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E039FD4D192C290E00BA0B76 /* CoreGraphics.framework */; };
 		E039FD50192C290E00BA0B76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E039FD4F192C290E00BA0B76 /* UIKit.framework */; };
@@ -65,6 +67,10 @@
 		E0369CF5193852BD0082ADB7 /* ABX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABX.h; sourceTree = "<group>"; };
 		E0369CF7193869A90082ADB7 /* ABXPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXPromptView.h; sourceTree = "<group>"; };
 		E0369CF8193869A90082ADB7 /* ABXPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXPromptView.m; sourceTree = "<group>"; };
+		E03971CA19515BAF000742B8 /* ABXVersionNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXVersionNotificationView.h; sourceTree = "<group>"; };
+		E03971CB19515BAF000742B8 /* ABXVersionNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXVersionNotificationView.m; sourceTree = "<group>"; };
+		E03971CD19515C1C000742B8 /* ABXAppStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXAppStore.h; sourceTree = "<group>"; };
+		E03971CE19515C1C000742B8 /* ABXAppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXAppStore.m; sourceTree = "<group>"; };
 		E039FD48192C290E00BA0B76 /* Sample Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E039FD4B192C290E00BA0B76 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E039FD4D192C290E00BA0B76 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -224,6 +230,8 @@
 				E0369CEA1938233F0082ADB7 /* ABXKeychain.m */,
 				E0B114861949293B000E873E /* NSString+ABXSizing.h */,
 				E0B114871949293B000E873E /* NSString+ABXSizing.m */,
+				E03971CD19515C1C000742B8 /* ABXAppStore.h */,
+				E03971CE19515C1C000742B8 /* ABXAppStore.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -277,6 +285,8 @@
 				E0369CF8193869A90082ADB7 /* ABXPromptView.m */,
 				E0D0E074194D0A8400756042 /* ABXFAQTableViewCell.h */,
 				E0D0E075194D0A8400756042 /* ABXFAQTableViewCell.m */,
+				E03971CA19515BAF000742B8 /* ABXVersionNotificationView.h */,
+				E03971CB19515BAF000742B8 /* ABXVersionNotificationView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -399,6 +409,8 @@
 				E0C53782192CD74F00858D01 /* ABXFAQViewController.m in Sources */,
 				E0D0E076194D0A8400756042 /* ABXFAQTableViewCell.m in Sources */,
 				E0369CF9193869A90082ADB7 /* ABXPromptView.m in Sources */,
+				E03971CF19515C1C000742B8 /* ABXAppStore.m in Sources */,
+				E03971CC19515BAF000742B8 /* ABXVersionNotificationView.m in Sources */,
 				E0369CF41938324C0082ADB7 /* ABXNotificationView.m in Sources */,
 				E039FD58192C290E00BA0B76 /* main.m in Sources */,
 				E0C5377F192CC7BB00858D01 /* ABXFAQsViewController.m in Sources */,
