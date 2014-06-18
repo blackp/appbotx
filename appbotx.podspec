@@ -6,13 +6,9 @@
 #
 Pod::Spec.new do |s|
   s.name             = "AppbotX"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of appbotx."
+  s.version          = "0.2.0"
+  s.summary          = "AppbotX is an Obj-C lib for the Appbot server."
   s.description      = <<-DESC
-                       An optional longer description of appbotx
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
                        DESC
   s.homepage         = "http://appbot.co"
   s.license          = 'MIT'
