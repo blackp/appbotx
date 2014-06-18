@@ -47,6 +47,7 @@
     
     return @{ @"os_version" : [@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion] ?: @""],
               @"app_version" : NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"] ?: @"",
+              @"app_version_short" : NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"] ?: @"",
               @"app_name" : NSBundle.mainBundle.infoDictionary[@"CFBundleDisplayName"] ?: @"",
               @"device" : [self platform] ?: @"",
               @"language" : [[NSLocale preferredLanguages] firstObject] ?: @"",
