@@ -16,6 +16,12 @@
 
 @implementation ABXBaseListViewController
 
+- (void)dealloc
+{
+    self.tableView.delegate = nil;
+    self.tableView.dataSource= nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

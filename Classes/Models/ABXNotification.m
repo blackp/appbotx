@@ -21,6 +21,19 @@ PROTECTED_ABXMODEL
         self.message = [attributes objectForKeyNulled:@"message"];
         self.actionLabel = [attributes objectForKeyNulled:@"action_label"];
         self.actionUrl = [attributes objectForKeyNulled:@"action_url"];
+        
+        // Date formatter, cache as they are expensive to create
+        static dispatch_once_t onceToken;
+        static NSDateFormatter *formatter = nil;
+        dispatch_once(&onceToken, ^{
+            formatter = [NSDateFormatter new];
+            [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZ"];
+        });
+        
+        NSString *createdAtString = [attributes objectForKeyNulled:@"created_at"];
+        if (createdAtString != nil) {
+            self.createdAt = [formatter dateFromString:createdAtString];
+        }
     }
     return self;
 }
@@ -28,6 +41,11 @@ PROTECTED_ABXMODEL
 + (id)createWithAttributes:(NSDictionary*)attributes
 {
     return [[ABXNotification alloc] initWithAttributes:attributes];
+}
+
++ (NSURLSessionDataTask*)fetchActive:(void(^)(NSArray *notifications, ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete
+{
+    return [self fetchList:@"notifications/active" params:nil complete:complete];
 }
 
 + (NSURLSessionDataTask*)fetch:(void(^)(NSArray *notifications, ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete

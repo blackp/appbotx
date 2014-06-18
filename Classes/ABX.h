@@ -8,6 +8,7 @@
 #import "ABXFAQsViewController.h"
 #import "ABXVersionsViewController.h"
 #import "ABXFeedbackViewController.h"
+#import "ABXNotificationsViewController.h"
 
 #import "ABXNotificationView.h"
 #import "ABXVersionNotificationView.h"

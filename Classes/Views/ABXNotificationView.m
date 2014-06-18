@@ -149,7 +149,7 @@
                      buttonColor:(UIColor*)buttonColor
 {
     // Fetch the notifications, there will only ever be one
-    [ABXNotification fetch:^(NSArray *notifications, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
+    [ABXNotification fetchActive:^(NSArray *notifications, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
         if (responseCode ==  ABXResponseCodeSuccess) {
                 if (notifications.count > 0) {
                     ABXNotification *notification = [notifications firstObject];

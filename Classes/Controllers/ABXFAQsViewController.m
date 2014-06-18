@@ -26,13 +26,6 @@
 
 @implementation ABXFAQsViewController
 
-- (void)dealloc
-{
-    self.tableView.delegate = nil;
-    self.tableView.dataSource= nil;
-}
-
-
 + (void)showFromController:(UIViewController*)controller hideContactButton:(BOOL)hideContactButton
 {
     ABXFAQsViewController *viewController = [[self alloc] init];

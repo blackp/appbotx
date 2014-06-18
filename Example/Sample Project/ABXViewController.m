@@ -108,6 +108,11 @@ static NSString* const kiTunesID = @"650762525";
     [ABXVersionsViewController showFromController:self];
 }
 
+- (IBAction)showNotifications:(id)sender
+{
+    [ABXNotificationsViewController showFromController:self];
+}
+
 - (IBAction)showFeedback:(id)sender
 {
     [ABXFeedbackViewController showFromController:self placeholder:nil];
