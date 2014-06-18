@@ -107,4 +107,36 @@ PROTECTED_ABXMODEL
     return [self.version compare:currentVersion options:NSNumericSearch] == NSOrderedDescending;
 }
 
+- (void)isLiveVersion:(NSString*)itunesId country:(NSString*)country complete:(void(^)(BOOL matches))complete
+{
+    // Look up the version on the App Store and see if it matches us
+    NSString *url = [NSString stringWithFormat:@"https://itunes.apple.com/lookup?id=%@&entity=software&country=%@", itunesId, country];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue currentQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if (data) {
+                                   NSError *jsonError;
+                                   NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data
+                                                                                          options:0
+                                                                                            error:&jsonError];
+                                   if (!jsonError && [result isKindOfClass:[NSDictionary class]]) {
+                                       NSArray *results = [result objectForKey:@"results"];
+                                       if ([results isKindOfClass:[NSArray class]] && results.count > 0) {
+                                           NSDictionary *result = [results firstObject];
+                                           NSString *storeVersion = [result objectForKey:@"version"];
+                                           if (complete && [storeVersion isKindOfClass:[NSString class]]) {
+                                               complete([storeVersion isEqualToString:self.version]);
+                                               return;
+                                           }
+                                       }
+                                   }
+                               }
+                               
+                               if (complete) {
+                                   complete(NO);
+                               }
+                           }];
+}
+
 @end

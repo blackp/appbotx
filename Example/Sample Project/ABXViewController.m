@@ -19,6 +19,8 @@
 
 @implementation ABXViewController
 
+static NSString* const kiTunesID = @"650762525";
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -108,21 +110,26 @@
     [ABXVersion fetchCurrentVersion:^(ABXVersion *version, ABXVersion *currentVersion, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
         if (responseCode == ABXResponseCodeSuccess) {
             if (currentVersion && [currentVersion isNewerThanCurrent]) {
-                // Show the view
-                [ABXNotificationView show:[NSString stringWithFormat:@"An update to version %@ is available", currentVersion.version]
-                               actionText:NSLocalizedString(@"Update", nil)
-                          backgroundColor:[UIColor colorWithRed:0xf4/255.0 green:0x7d/255.0 blue:0x67/255.0 alpha:1]
-                                textColor:[UIColor blackColor]
-                              buttonColor:[UIColor whiteColor]
-                             inController:self
-                              actionBlock:^(ABXNotificationView *view) {
-                                  // Throw them to the App Store
-                                  [view dismiss];
-                                  [self openAppStoreForApp:@"650762525"];
-                              }
-                             dismissBlock:^(ABXNotificationView *view) {
-                                 // Any action you want
-                             }];
+                // Check if it is live on the store
+                [currentVersion isLiveVersion:kiTunesID country:@"us" complete:^(BOOL matches) {
+                    if (matches) {
+                        // Show the view
+                        [ABXNotificationView show:[NSString stringWithFormat:@"An update to version %@ is available", currentVersion.version]
+                                       actionText:NSLocalizedString(@"Update", nil)
+                                  backgroundColor:[UIColor colorWithRed:0xf4/255.0 green:0x7d/255.0 blue:0x67/255.0 alpha:1]
+                                        textColor:[UIColor blackColor]
+                                      buttonColor:[UIColor whiteColor]
+                                     inController:self
+                                      actionBlock:^(ABXNotificationView *view) {
+                                          // Throw them to the App Store
+                                          [view dismiss];
+                                          [self openAppStoreForApp:kiTunesID];
+                                      }
+                                     dismissBlock:^(ABXNotificationView *view) {
+                                         // Any action you want
+                                     }];
+                    }
+                }];
             }
             else if (version) {
                 // We got a match!
@@ -221,7 +228,7 @@
 
 - (void)appbotPromptForReview
 {
-    [self openAppStoreReviewForApp:@"650762525"];
+    [self openAppStoreReviewForApp:kiTunesID];
     self.promptView.hidden = YES;
 }
 
