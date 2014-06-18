@@ -48,44 +48,10 @@ static NSString* const kiTunesID = @"650762525";
 
 - (IBAction)onFetchNotifications:(id)sender
 {
-    // Fetch the notifications, there will only ever be one
-    [ABXNotification fetch:^(NSArray *notifications, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
-        switch (responseCode) {
-            case ABXResponseCodeSuccess: {
-                if (notifications.count > 0) {
-                    ABXNotification *notification = [notifications firstObject];
-                    
-                    if (![notification hasSeen]) {
-                        // Show the view
-                        [ABXNotificationView show:notification.message
-                                       actionText:notification.actionLabel
+    [ABXNotificationView fetchAndShowInController:self
                                   backgroundColor:[UIColor colorWithRed:0x86/255.0 green:0xcc/255.0 blue:0xf1/255.0 alpha:1]
                                         textColor:[UIColor blackColor]
-                                      buttonColor:[UIColor whiteColor]
-                                     inController:self
-                                      actionBlock:^(ABXNotificationView *view) {
-                                          // Open the URL
-                                          // Here you could open it in your internal UIWebView or route accordingly
-                                          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:notification.actionUrl]];
-                                      } dismissBlock:^(ABXNotificationView *view) {
-                                          // Here you can mark it as seen if you
-                                          // don't want it to appear again
-                                          // [notification markAsSeen];
-                                      }];
-                    }
-                }
-                else {
-                    [self showAlert:@"Notification" message:@"No notifications"];
-                }
-            }
-                break;
-                
-            default: {
-                [self showAlert:@"Notification Error" message:[NSString stringWithFormat:@"%u", responseCode]];
-            }
-                break;
-        }
-    }];
+                                      buttonColor:[UIColor whiteColor]];
 }
 
 - (IBAction)onFetchVersions:(id)sender

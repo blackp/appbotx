@@ -23,6 +23,11 @@ typedef void (^ABXNotificationViewCallback)(ABXNotificationView *view);
                  actionBlock:(ABXNotificationViewCallback)actionBlock
                 dismissBlock:(ABXNotificationViewCallback)dismissBlock;
 
++ (void)fetchAndShowInController:(UIViewController*)controller
+                 backgroundColor:(UIColor*)backgroundColor
+                       textColor:(UIColor*)textColor
+                     buttonColor:(UIColor*)buttonColor;
+
 - (void)dismiss;
 
 @end
