@@ -50,8 +50,9 @@ PROTECTED_ABXMODEL
 
 + (NSURLSessionDataTask*)fetchCurrentVersion:(void(^)(ABXVersion *version, ABXVersion *latestVersion, ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete
 {
+    NSString *currentVersion = NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"] ?: NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"];
     return [[ABXApiClient instance] GET:@"versions"
-                                 params:@{ @"version" : NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"] }
+                                 params:@{ @"version" : currentVersion }
                                complete:^(ABXResponseCode responseCode, NSInteger httpCode, NSError *error, id JSON) {
                                    if (responseCode == ABXResponseCodeSuccess) {
                                        NSDictionary *results = [JSON objectForKeyNulled:@"results"];
@@ -102,7 +103,8 @@ PROTECTED_ABXMODEL
 
 - (BOOL)isNewerThanCurrent
 {
-    return [self.version compare:NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"] options:NSNumericSearch] == NSOrderedDescending;
+    NSString *currentVersion = NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"] ?: NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"];
+    return [self.version compare:currentVersion options:NSNumericSearch] == NSOrderedDescending;
 }
 
 @end

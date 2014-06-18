@@ -140,7 +140,8 @@ static NSString* const kInteractionKey = @"ABXPromptViewInteraction";
 
 + (NSString*)keyForCurrentVersion
 {
-    return [kInteractionKey stringByAppendingString:NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"]];
+    NSString *version = NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"] ?: NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"];
+    return [kInteractionKey stringByAppendingString:version];
 }
 
 + (BOOL)hasHadInteractionForCurrentVersion
