@@ -173,7 +173,7 @@
 
 - (IBAction)showFAQs:(id)sender
 {
-    [ABXFAQsViewController showFromController:self];
+    [ABXFAQsViewController showFromController:self hideContactButton:NO];
 }
 
 - (IBAction)showVersions:(id)sender

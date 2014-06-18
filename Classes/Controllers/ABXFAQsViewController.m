@@ -11,6 +11,7 @@
 #import "ABXFAQViewController.h"
 #import "ABXFeedbackViewController.h"
 #import "ABXFAQTableViewCell.h"
+#import "ABXNavigationController.h"
 
 @interface ABXFAQsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
@@ -18,6 +19,8 @@
 @property (nonatomic, strong) NSArray *filteredFaqs;
 
 @property (nonatomic, strong) UISearchBar *searchBar;
+
+@property (nonatomic, assign) BOOL hideContactButton;
 
 @end
 
@@ -27,6 +30,19 @@
 {
     self.tableView.delegate = nil;
     self.tableView.dataSource= nil;
+}
+
+
++ (void)showFromController:(UIViewController*)controller hideContactButton:(BOOL)hideContactButton
+{
+    ABXFAQsViewController *viewController = [[self alloc] init];
+    viewController.hideContactButton = hideContactButton;
+    UINavigationController *nav = [[ABXNavigationController alloc] initWithRootViewController:viewController];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        // Show as a sheet on iPad
+        nav.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    [controller presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)viewDidLoad
@@ -77,11 +93,13 @@
     self.tableView.tableHeaderView = self.searchBar;
     
     // Nav buttons
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithTitle:NSLocalizedString(@"Contact", nil)
-                                              style:UIBarButtonItemStylePlain
-                                              target:self
-                                              action:@selector(onContact)];
+    if (!self.hideContactButton) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                                  initWithTitle:NSLocalizedString(@"Contact", nil)
+                                                  style:UIBarButtonItemStylePlain
+                                                  target:self
+                                                  action:@selector(onContact)];
+    }
 }
 
 #pragma mark - Fetching
@@ -169,9 +187,9 @@
         }
         
         // Show the details
-        ABXFAQViewController* controller = [[ABXFAQViewController alloc] init];
-        controller.faq = self.faqs[indexPath.row];
-        [self.navigationController pushViewController:controller animated:YES];
+        [ABXFAQViewController pushOnNavController:self.navigationController
+                                              faq:self.faqs[indexPath.row]
+                                hideContactButton:self.hideContactButton];
     }
 }
 

@@ -11,4 +11,6 @@
 
 @interface ABXFAQsViewController : ABXBaseListViewController
 
++ (void)showFromController:(UIViewController*)controller hideContactButton:(BOOL)hideContactButton;
+
 @end

@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIWebView *webview;
 @property (nonatomic, strong) UIView *bottom;
 
+@property (nonatomic, assign) BOOL hideContactButton;
+
 @end
 
 @implementation ABXFAQViewController
@@ -23,6 +25,15 @@
 {
     self.webview.delegate = nil;
     self.webview = nil;
+}
+
++ (void)pushOnNavController:(UINavigationController*)navigationController faq:(ABXFaq*)faq hideContactButton:(BOOL)hideContactButton
+{
+    // Show the details
+    ABXFAQViewController* controller = [[ABXFAQViewController alloc] init];
+    controller.faq = faq;
+    controller.hideContactButton = hideContactButton;
+    [navigationController pushViewController:controller animated:YES];
 }
 
 
@@ -44,11 +55,13 @@
     [self addToolbar];
     
     // Nav buttons
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithTitle:NSLocalizedString(@"Contact", nil)
-                                              style:UIBarButtonItemStylePlain
-                                              target:self
-                                              action:@selector(onContact)];
+    if (!self.hideContactButton) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                                  initWithTitle:NSLocalizedString(@"Contact", nil)
+                                                  style:UIBarButtonItemStylePlain
+                                                  target:self
+                                                  action:@selector(onContact)];
+    }
     
     // Load the HTML
     NSString *html = [NSString stringWithFormat:
