@@ -107,7 +107,7 @@
     // Toolbar
     UIView *bottom = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 44, CGRectGetWidth(self.view.frame), 44)];
     bottom.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    bottom.backgroundColor = [UIColor clearColor];
+    bottom.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottom];
     self.bottom = bottom;
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:bottom.bounds];
@@ -122,11 +122,10 @@
     [bottom addSubview:label];
     
     // Upvote button
-    UIButton *yesButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(bottom.bounds) - 190, 7, 80, 30)];
-    yesButton.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1];
+    UIButton *yesButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    yesButton.frame = CGRectMake(CGRectGetWidth(bottom.bounds) - 132, 0, 44, 44);
     yesButton.layer.cornerRadius = 4;
     yesButton.layer.masksToBounds = YES;
-    [yesButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [yesButton setTitle:NSLocalizedString(@"Yes", nil) forState:UIControlStateNormal];
     yesButton.titleLabel.font = [UIFont systemFontOfSize:15];
     yesButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
@@ -134,11 +133,10 @@
     [bottom addSubview:yesButton];
     
     // Downvote button
-    UIButton *noButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(bottom.bounds) - 100, 7, 80, 30)];
-    noButton.backgroundColor = [UIColor colorWithWhite:0.97 alpha:1];
+    UIButton *noButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    noButton.frame = CGRectMake(CGRectGetWidth(bottom.bounds) - 66, 0, 44, 44);
     noButton.layer.cornerRadius = 4;
     noButton.layer.masksToBounds = YES;
-    [noButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [noButton setTitle:NSLocalizedString(@"No", nil) forState:UIControlStateNormal];
     noButton.titleLabel.font = [UIFont systemFontOfSize:15];
     noButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
