@@ -13,10 +13,9 @@
 @property (nonatomic, copy) NSString *placeholder;
 
 + (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder;
-
-// Provide a custom email to default to
-+ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email;
++ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email metaData:(NSDictionary*)metaData;
 
 @property (nonatomic, copy) NSString *defaultEmail;
+@property (nonatomic, strong) NSDictionary *metaData;
 
 @end

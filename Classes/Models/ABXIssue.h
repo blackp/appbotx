@@ -11,6 +11,7 @@
 
 + (NSURLSessionDataTask*)submit:(NSString*)email
                        feedback:(NSString*)feedback
+                       metaData:(NSDictionary*)metaData
                        complete:(void(^)(ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete;
 
 @end

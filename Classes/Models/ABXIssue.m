@@ -16,6 +16,7 @@
 
 + (NSURLSessionDataTask*)submit:(NSString*)email
                        feedback:(NSString*)feedback
+                       metaData:(NSDictionary*)metaData
                        complete:(void(^)(ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:[self systemInfo]];
@@ -24,6 +25,9 @@
     }
     if (email.length > 0) {
         [params setObject:email forKey:@"email"];
+    }
+    if (metaData) {
+        [params setObject:metaData forKey:@"meta_data"];
     }
     
     return [[ABXApiClient instance] POST:@"issues"

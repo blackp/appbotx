@@ -115,11 +115,12 @@ static NSInteger const kCloseAlert = 1;
     
 }
 
-+ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email
++ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email metaData:(NSDictionary*)metaData
 {
     ABXFeedbackViewController *viewController = [[self alloc] init];
     viewController.placeholder = placeholder;
     viewController.defaultEmail = email;
+    viewController.metaData = metaData;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         // Show as a sheet on iPad
@@ -130,7 +131,7 @@ static NSInteger const kCloseAlert = 1;
 
 + (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder
 {
-    [self showFromController:controller placeholder:placeholder email:nil];
+    [self showFromController:controller placeholder:placeholder email:nil metaData:nil];
 }
 
 #pragma mark Keyboard
@@ -323,6 +324,7 @@ static NSInteger const kCloseAlert = 1;
     
     [ABXIssue submit:self.textField.text
             feedback:self.textView.text
+            metaData:self.metaData
             complete:^(ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
                 switch (responseCode) {
                     case ABXResponseCodeSuccess: {
