@@ -20,8 +20,6 @@
 
 @property (nonatomic, strong) UISearchBar *searchBar;
 
-@property (nonatomic, assign) BOOL hideContactButton;
-
 @end
 
 @implementation ABXFAQsViewController

@@ -13,4 +13,6 @@
 
 + (void)showFromController:(UIViewController*)controller hideContactButton:(BOOL)hideContactButton;
 
+@property (nonatomic, assign) BOOL hideContactButton;
+
 @end

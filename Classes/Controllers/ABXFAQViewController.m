@@ -15,8 +15,6 @@
 @property (nonatomic, strong) UIWebView *webview;
 @property (nonatomic, strong) UIView *bottom;
 
-@property (nonatomic, assign) BOOL hideContactButton;
-
 @end
 
 @implementation ABXFAQViewController

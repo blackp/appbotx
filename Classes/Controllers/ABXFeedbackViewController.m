@@ -14,8 +14,6 @@
 
 @interface ABXFeedbackViewController ()<UITextViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, copy) NSString *defaultEmail;
-
 @property (nonatomic, strong) ABXTextView *textView;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) ABXKeychain *keychain;

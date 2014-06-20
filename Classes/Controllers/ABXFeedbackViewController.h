@@ -17,4 +17,6 @@
 // Provide a custom email to default to
 + (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email;
 
+@property (nonatomic, copy) NSString *defaultEmail;
+
 @end
