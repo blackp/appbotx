@@ -51,7 +51,11 @@ static NSString* const kiTunesID = @"650762525";
     [ABXNotificationView fetchAndShowInController:self
                                   backgroundColor:[UIColor colorWithRed:0x86/255.0 green:0xcc/255.0 blue:0xf1/255.0 alpha:1]
                                         textColor:[UIColor blackColor]
-                                      buttonColor:[UIColor whiteColor]];
+                                      buttonColor:[UIColor whiteColor]
+                                         complete:^(BOOL shown) {
+                                             // Here you may want to chain fetching versions
+                                             // if it wasn't shown
+                                         }];
 }
 
 - (IBAction)onFetchVersions:(id)sender
@@ -78,7 +82,11 @@ static NSString* const kiTunesID = @"650762525";
                                              foriTunesID:kiTunesID
                                          backgroundColor:[UIColor colorWithRed:0xf4/255.0 green:0x7d/255.0 blue:0x67/255.0 alpha:1]
                                                textColor:[UIColor blackColor]
-                                             buttonColor:[UIColor whiteColor]];
+                                             buttonColor:[UIColor whiteColor]
+                                                complete:^(BOOL shown) {
+                                                    // Here you may want to chain fetching notifications
+                                                    // if it wasn't shown
+                                                }];
 }
 
 - (IBAction)onFetchFAQs:(id)sender

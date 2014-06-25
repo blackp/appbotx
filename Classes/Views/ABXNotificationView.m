@@ -147,34 +147,46 @@
                  backgroundColor:(UIColor*)backgroundColor
                        textColor:(UIColor*)textColor
                      buttonColor:(UIColor*)buttonColor
+                        complete:(void(^)(BOOL shown))complete
 {
     // Fetch the notifications, there will only ever be one
     [ABXNotification fetchActive:^(NSArray *notifications, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
         if (responseCode ==  ABXResponseCodeSuccess) {
-                if (notifications.count > 0) {
-                    ABXNotification *notification = [notifications firstObject];
+            if (notifications.count > 0) {
+                ABXNotification *notification = [notifications firstObject];
+                
+                if (![notification hasSeen]) {
+                    // Show the view
+                    [ABXNotificationView show:notification.message
+                                   actionText:notification.actionLabel
+                              backgroundColor:backgroundColor
+                                    textColor:textColor
+                                  buttonColor:buttonColor
+                                 inController:controller
+                                  actionBlock:^(ABXNotificationView *view) {
+                                      // Open the URL
+                                      // Here you could open it in your internal UIWebView or route accordingly
+                                      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:notification.actionUrl]];
+                                      [notification markAsSeen];
+                                  } dismissBlock:^(ABXNotificationView *view) {
+                                      // Here you can mark it as seen if you
+                                      // don't want it to appear again
+                                      [notification markAsSeen];
+                                  }];
                     
-                    if (![notification hasSeen]) {
-                        // Show the view
-                        [ABXNotificationView show:notification.message
-                                       actionText:notification.actionLabel
-                                  backgroundColor:backgroundColor
-                                        textColor:textColor
-                                      buttonColor:buttonColor
-                                     inController:controller
-                                      actionBlock:^(ABXNotificationView *view) {
-                                          // Open the URL
-                                          // Here you could open it in your internal UIWebView or route accordingly
-                                          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:notification.actionUrl]];
-                                          [notification markAsSeen];
-                                      } dismissBlock:^(ABXNotificationView *view) {
-                                          // Here you can mark it as seen if you
-                                          // don't want it to appear again
-                                          [notification markAsSeen];
-                                      }];
+                    if (complete) {
+                        complete(YES);
                     }
+                    
+                    return;
                 }
             }
+        }
+        
+        
+        if (complete) {
+            complete(NO);
+        }
     }];
 }
 

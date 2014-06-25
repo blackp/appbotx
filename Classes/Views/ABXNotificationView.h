@@ -26,7 +26,8 @@ typedef void (^ABXNotificationViewCallback)(ABXNotificationView *view);
 + (void)fetchAndShowInController:(UIViewController*)controller
                  backgroundColor:(UIColor*)backgroundColor
                        textColor:(UIColor*)textColor
-                     buttonColor:(UIColor*)buttonColor;
+                     buttonColor:(UIColor*)buttonColor
+                        complete:(void(^)(BOOL shown))complete;
 
 - (void)dismiss;
 

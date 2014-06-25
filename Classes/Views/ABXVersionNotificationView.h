@@ -14,6 +14,7 @@
                      foriTunesID:(NSString*)itunesId
                  backgroundColor:(UIColor*)backgroundColor
                        textColor:(UIColor*)textColor
-                     buttonColor:(UIColor*)buttonColor;
+                     buttonColor:(UIColor*)buttonColor
+                        complete:(void(^)(BOOL shown))complete;
 
 @end

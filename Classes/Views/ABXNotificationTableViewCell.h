@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ABXNotification.h"
+#import "ABXVersion.h"
+#import "ABXVersionsViewController.h"
+
 @interface ABXNotificationTableViewCell : UITableViewCell
 
 - (void)setNotification:(ABXNotification *)notification;

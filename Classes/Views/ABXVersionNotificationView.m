@@ -17,7 +17,7 @@
                  backgroundColor:(UIColor*)backgroundColor
                        textColor:(UIColor*)textColor
                      buttonColor:(UIColor*)buttonColor
-
+                        complete:(void(^)(BOOL shown))complete
 {
     [ABXVersion fetchCurrentVersion:^(ABXVersion *version, ABXVersion *currentVersion, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
         if (responseCode == ABXResponseCodeSuccess) {
@@ -40,6 +40,15 @@
                                      dismissBlock:^(ABXNotificationView *view) {
                                          // Any action you want
                                      }];
+                        
+                        if (complete) {
+                            complete(YES);
+                        }
+                    }
+                    else {
+                        if (complete) {
+                            complete(NO);
+                        }
                     }
                 }];
             }
@@ -65,7 +74,21 @@
                                      // don't want it to appear again
                                      [version markAsSeen];
                                  }];
+                    
+                    if (complete) {
+                        complete(YES);
+                    }
                 }
+                else {
+                    if (complete) {
+                        complete(NO);
+                    }
+                }
+            }
+        }
+        else {
+            if (complete) {
+                complete(NO);
             }
         }
     }];
