@@ -111,6 +111,8 @@ static NSInteger const kCloseAlert = 1;
     self.attachmentsImageView.hidden = YES;
     self.attachmentsImageView.clipsToBounds = YES;
     self.attachmentsImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.attachmentsImageView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1].CGColor;
+    self.attachmentsImageView.layer.borderWidth = 1;
     [self.attachmentsView addSubview:self.attachmentsImageView];
     
     // Title
