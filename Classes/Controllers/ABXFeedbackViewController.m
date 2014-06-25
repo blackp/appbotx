@@ -101,7 +101,12 @@ static NSInteger const kCloseAlert = 1;
     self.attachmentsButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.attachmentsButton setTitle:NSLocalizedString(@"attach a file", nil) forState:UIControlStateNormal];
     CGFloat width = [[self.attachmentsButton titleForState:UIControlStateNormal] widthToFitFont:self.attachmentsButton.titleLabel.font];
-    self.attachmentsButton.frame = CGRectMake(CGRectGetWidth(self.attachmentsView.frame) - width, 0, width, 44);
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedAscending) {
+        self.attachmentsButton.frame = CGRectMake(CGRectGetWidth(self.attachmentsView.frame) - width - 10, 6, width + 20, 32);
+    }
+    else {
+        self.attachmentsButton.frame = CGRectMake(CGRectGetWidth(self.attachmentsView.frame) - width, 0, width, 44);
+    }
     self.attachmentsButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     [self.attachmentsButton addTarget:self action:@selector(onAttachment:) forControlEvents:UIControlEventTouchUpInside];
     [self.attachmentsView addSubview:self.attachmentsButton];

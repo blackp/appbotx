@@ -49,7 +49,12 @@
         
         // Action button
         self.actionButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        self.actionButton.frame = CGRectMake(0, CGRectGetHeight(self.contentView.bounds) - 44, CGRectGetWidth(self.contentView.bounds), 44);
+        if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedAscending) {
+            self.actionButton.frame = CGRectMake(20, CGRectGetHeight(self.contentView.bounds) - 38, CGRectGetWidth(self.contentView.bounds) - 40, 32);
+        }
+        else {
+            self.actionButton.frame = CGRectMake(0, CGRectGetHeight(self.contentView.bounds) - 44, CGRectGetWidth(self.contentView.bounds), 44);
+        }
         self.actionButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         [self.actionButton addTarget:self action:@selector(onAction) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.actionButton];

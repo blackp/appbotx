@@ -121,7 +121,12 @@
     
     // Upvote button
     UIButton *yesButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    yesButton.frame = CGRectMake(CGRectGetWidth(bottom.bounds) - 132, 0, 44, 44);
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedAscending) {
+        yesButton.frame = CGRectMake(CGRectGetWidth(bottom.bounds) - 132, 6, 44, 32);
+    }
+    else {
+        yesButton.frame = CGRectMake(CGRectGetWidth(bottom.bounds) - 132, 0, 44, 44);
+    }
     yesButton.layer.cornerRadius = 4;
     yesButton.layer.masksToBounds = YES;
     [yesButton setTitle:NSLocalizedString(@"Yes", nil) forState:UIControlStateNormal];
@@ -132,7 +137,12 @@
     
     // Downvote button
     UIButton *noButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    noButton.frame = CGRectMake(CGRectGetWidth(bottom.bounds) - 66, 0, 44, 44);
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedAscending) {
+        noButton.frame = CGRectMake(CGRectGetWidth(bottom.bounds) - 66, 6, 44, 32);
+    }
+    else {
+        noButton.frame = CGRectMake(CGRectGetWidth(bottom.bounds) - 66, 0, 44, 44);
+    }
     noButton.layer.cornerRadius = 4;
     noButton.layer.masksToBounds = YES;
     [noButton setTitle:NSLocalizedString(@"No", nil) forState:UIControlStateNormal];
