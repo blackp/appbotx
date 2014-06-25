@@ -11,8 +11,11 @@
 
 @interface ABXFAQsViewController : ABXBaseListViewController
 
-+ (void)showFromController:(UIViewController*)controller hideContactButton:(BOOL)hideContactButton;
++ (void)showFromController:(UIViewController*)controller
+         hideContactButton:(BOOL)hideContactButton
+           contactMetaData:(NSDictionary*)contactMetaData;
 
 @property (nonatomic, assign) BOOL hideContactButton;
+@property (nonatomic, strong) NSDictionary *contactMetaData;
 
 @end

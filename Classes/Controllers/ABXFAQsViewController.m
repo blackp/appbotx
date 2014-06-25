@@ -24,10 +24,11 @@
 
 @implementation ABXFAQsViewController
 
-+ (void)showFromController:(UIViewController*)controller hideContactButton:(BOOL)hideContactButton
++ (void)showFromController:(UIViewController*)controller hideContactButton:(BOOL)hideContactButton contactMetaData:(NSDictionary*)contactMetaData;
 {
     ABXFAQsViewController *viewController = [[self alloc] init];
     viewController.hideContactButton = hideContactButton;
+    viewController.contactMetaData = contactMetaData;
     UINavigationController *nav = [[ABXNavigationController alloc] initWithRootViewController:viewController];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         // Show as a sheet on iPad
@@ -124,7 +125,10 @@
 - (void)onContact
 {
     [ABXFeedbackViewController showFromController:self
-                                      placeholder:NSLocalizedString(@"How can we help?", nil)];
+                                      placeholder:NSLocalizedString(@"How can we help?", nil)
+                                            email:nil
+                                         metaData:self.contactMetaData
+                                            image:nil];
 }
 
 #pragma mark - UITableViewDataSource

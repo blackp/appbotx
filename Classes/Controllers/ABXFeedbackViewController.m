@@ -11,12 +11,25 @@
 #import "ABXKeychain.h"
 #import "ABXTextView.h"
 #import "ABXIssue.h"
+#import "NSString+ABXSizing.h"
+#import "ABXAttachment.h"
 
-@interface ABXFeedbackViewController ()<UITextViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
+#import <AssetsLibrary/AssetsLibrary.h>
+
+@interface ABXFeedbackViewController ()<UITextViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) ABXTextView *textView;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) ABXKeychain *keychain;
+
+@property (nonatomic, strong) UIView *overlayView;
+
+@property (nonatomic, strong) UIView *attachmentsView;
+@property (nonatomic, strong) UIButton *attachmentsButton;
+@property (nonatomic, strong) UIImageView *attachmentsImageView;
+@property (nonatomic, strong) ABXAttachment *attachment;
+
+@property (nonatomic, assign) BOOL sending;
 
 @end
 
@@ -79,6 +92,27 @@ static NSInteger const kCloseAlert = 1;
     self.textView.delegate = self;
     [scrollView addSubview:self.textView];
     
+    // Attachments
+    self.attachmentsView = [[UIView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.textView.frame), CGRectGetWidth(self.view.frame) - 40, 44)];
+    self.attachmentsView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [scrollView addSubview:self.attachmentsView];
+    
+    // Attachment button
+    self.attachmentsButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.attachmentsButton setTitle:NSLocalizedString(@"attach a file", nil) forState:UIControlStateNormal];
+    CGFloat width = [[self.attachmentsButton titleForState:UIControlStateNormal] widthToFitFont:self.attachmentsButton.titleLabel.font];
+    self.attachmentsButton.frame = CGRectMake(CGRectGetWidth(self.attachmentsView.frame) - width, 0, width, 44);
+    self.attachmentsButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    [self.attachmentsButton addTarget:self action:@selector(onAttachment:) forControlEvents:UIControlEventTouchUpInside];
+    [self.attachmentsView addSubview:self.attachmentsButton];
+    
+    // Preview image
+    self.attachmentsImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.attachmentsView.frame) - 34, 0, 34, 34)];
+    self.attachmentsImageView.hidden = YES;
+    self.attachmentsImageView.clipsToBounds = YES;
+    self.attachmentsImageView.contentMode = UIViewContentModeScaleAspectFill;
+    [self.attachmentsView addSubview:self.attachmentsImageView];
+    
     // Title
     self.title = NSLocalizedString(@"Contact", nil);
     
@@ -95,14 +129,7 @@ static NSInteger const kCloseAlert = 1;
         self.textField.text = self.keychain[@"FeedbackEmail"];
     }
     
-    if (self.textField.text.length > 0) {
-        // There is an email set, start on the details
-        [self.textView becomeFirstResponder];
-    }
-    else {
-        // Start on the email
-        [self.textField becomeFirstResponder];
-    }
+    [self openKeyboard];
     
     // Warn if there is no internet connection
     if (![ABXApiClient isInternetReachable]) {
@@ -115,7 +142,11 @@ static NSInteger const kCloseAlert = 1;
     
 }
 
-+ (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder email:(NSString*)email metaData:(NSDictionary*)metaData
++ (void)showFromController:(UIViewController*)controller
+               placeholder:(NSString*)placeholder
+                     email:(NSString*)email
+                  metaData:(NSDictionary*)metaData
+                     image:(UIImage*)image
 {
     ABXFeedbackViewController *viewController = [[self alloc] init];
     viewController.placeholder = placeholder;
@@ -127,14 +158,31 @@ static NSInteger const kCloseAlert = 1;
         nav.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     [controller presentViewController:nav animated:YES completion:nil];
+    
+    if (image) {
+        [viewController view];
+        [viewController uploadImage:image];
+    }
 }
 
 + (void)showFromController:(UIViewController*)controller placeholder:(NSString*)placeholder
 {
-    [self showFromController:controller placeholder:placeholder email:nil metaData:nil];
+    [self showFromController:controller placeholder:placeholder email:nil metaData:nil image:nil];
 }
 
-#pragma mark Keyboard
+#pragma mark - Keyboard
+
+- (void)openKeyboard
+{
+    if (self.textField.text.length > 0) {
+        // There is an email set, start on the details
+        [self.textView becomeFirstResponder];
+    }
+    else {
+        // Start on the email
+        [self.textField becomeFirstResponder];
+    }
+}
 
 - (void)onKeyboard:(NSNotification*)notification
 {
@@ -158,8 +206,13 @@ static NSInteger const kCloseAlert = 1;
     
     // Move the textView so the bottom doesn't extend beyound the keyboard
     CGRect tvFrame = self.textView.frame;
-    tvFrame.size.height = CGRectGetHeight(self.textView.superview.bounds) - (CGRectGetHeight(keyboardRect) + CGRectGetMinY(tvFrame) + topOffset);
+    CGRect attachFrame = self.attachmentsView.frame;
+    tvFrame.size.height = CGRectGetHeight(self.textView.superview.bounds) - (CGRectGetHeight(keyboardRect) + CGRectGetMinY(tvFrame) + topOffset) - CGRectGetHeight(attachFrame);
     self.textView.frame = tvFrame;
+    
+    // Move the seperator
+    attachFrame.origin.y = CGRectGetMaxY(tvFrame);
+    self.attachmentsView.frame = attachFrame;
 }
 
 - (void)showButtons
@@ -216,6 +269,8 @@ static NSInteger const kCloseAlert = 1;
 
 - (void)validateAndSend
 {
+    self.sending = NO;
+    
     [self.textView resignFirstResponder];
     [self.textField resignFirstResponder];
     
@@ -302,6 +357,7 @@ static NSInteger const kCloseAlert = 1;
     smoke.backgroundColor = [UIColor blackColor];
     smoke.alpha = 0.5;
     [overlay addSubview:smoke];
+    self.overlayView = overlay;
     
     UIView *content = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(overlay.frame), 50)];
     content.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -322,8 +378,20 @@ static NSInteger const kCloseAlert = 1;
     label.backgroundColor = [UIColor clearColor];
     [content addSubview:label];
     
+    // Ensure the attachment has finished, otherwise we need to wait for it
+    if (self.attachment == nil || self.attachment.identifier != nil) {
+        [self submit];
+    }
+    else {
+        self.sending = YES;
+    }
+}
+
+- (void)submit
+{
     [ABXIssue submit:self.textField.text
             feedback:self.textView.text
+         attachments:self.attachment ? @[ self.attachment ] : nil
             metaData:self.metaData
             complete:^(ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
                 switch (responseCode) {
@@ -334,16 +402,16 @@ static NSInteger const kCloseAlert = 1;
                                                                       }];
                     }
                         break;
-                
+                        
                     default: {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                                         message:NSLocalizedString(@"There was an error sending your feedback, please try again.", nil)
                                                                        delegate:nil
                                                               cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                               otherButtonTitles:nil];
+                                                              otherButtonTitles:nil];
                         [alert show];
                         [self showButtons];
-                        [overlay removeFromSuperview];
+                        [self.overlayView removeFromSuperview];
                     }
                         break;
                 }
@@ -365,6 +433,20 @@ static NSInteger const kCloseAlert = 1;
 - (void)textViewDidChange:(UITextView *)textView
 {
     [self showButtons];
+    
+    // http://stackoverflow.com/questions/18966675/uitextview-in-ios7-clips-the-last-line-of-text-string
+    CGRect line = [textView caretRectForPosition:textView.selectedTextRange.start];
+    CGFloat overflow = line.origin.y + line.size.height - ( textView.contentOffset.y + textView.bounds.size.height - textView.contentInset.bottom - textView.contentInset.top );
+    if ( overflow > 0 ) {
+        // We are at the bottom of the visible text and introduced a line feed, scroll down (iOS 7 does not do it)
+        // Scroll caret to visible area
+        CGPoint offset = textView.contentOffset;
+        offset.y += overflow + 7; // leave 7 pixels margin
+        // Cannot animate with setContentOffset:animated: or caret will not appear
+        [UIView animateWithDuration:.2 animations:^{
+            [textView setContentOffset:offset];
+        }];
+    }
 }
 
 #pragma mark - UITextFieldDelegate
@@ -374,6 +456,137 @@ static NSInteger const kCloseAlert = 1;
     [self.textView becomeFirstResponder];
     
     return NO;
+}
+
+#pragma mark - Attachments
+
+- (void)onAttachment:(UIButton*)button
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc] init];
+    sheet.title = nil;
+    sheet.delegate = self;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        [sheet addButtonWithTitle:NSLocalizedString(@"Take Photo", nil)];
+    }
+    [sheet addButtonWithTitle:NSLocalizedString(@"Choose Photo", nil)];
+    [sheet addButtonWithTitle:NSLocalizedString(@"Use Latest Photo", nil)];
+    sheet.cancelButtonIndex = [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+    [sheet showFromRect:button.frame inView:button.superview animated:YES];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        // Allow for there being no camera
+        buttonIndex++;
+    }
+    
+    switch (buttonIndex) {
+        case 0: {
+            // Camera
+            [self showPhotoPicker:UIImagePickerControllerSourceTypeCamera];
+        }
+            break;
+            
+        case 1: {
+            // Choose
+            [self showPhotoPicker:UIImagePickerControllerSourceTypePhotoLibrary];
+        }
+            break;
+            
+        case 2: {
+            // Latest
+            [self getLatestPhoto];
+        }
+            break;
+    }
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)showPhotoPicker:(UIImagePickerControllerSourceType)type
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.sourceType = type;
+    imagePicker.allowsEditing = YES;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    if (image) {
+        [self uploadImage:image];
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [self openKeyboard];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [self openKeyboard];
+}
+
+- (void)getLatestPhoto
+{
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        NSInteger numberOfAssets = [group numberOfAssets];
+        if (numberOfAssets > 0) {
+            NSInteger lastIndex = numberOfAssets - 1;
+            [group enumerateAssetsAtIndexes:[NSIndexSet indexSetWithIndex:lastIndex] options:0 usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                ALAssetRepresentation *rep = [result defaultRepresentation];
+                UIImage *image = [UIImage imageWithCGImage:[rep fullResolutionImage]];
+                if (image && image.size.width > 0) {
+                    *stop = YES;
+                    
+                    [self uploadImage:image];
+                }
+            }];
+            
+            *stop = YES;
+        }
+    } failureBlock:^(NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Can't Access.", nil)
+                                    message:NSLocalizedString(@"We can't access your photos, please ensure this application has access in Settings.", nil)
+                                   delegate:nil
+                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil] show];
+    }];
+}
+
+#pragma mark - Images
+
+- (void)uploadImage:(UIImage*)image
+{
+    self.attachmentsButton.hidden = YES;
+    self.attachmentsImageView.image = image;
+    self.attachmentsImageView.hidden = NO;
+    
+    self.attachment = [ABXAttachment new];
+    self.attachment.image = image;
+    [self.attachment upload:^(ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
+        if (self.attachment.identifier == nil) {
+            self.attachment = nil;
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error uploading.", nil)
+                                        message:NSLocalizedString(@"We couldn't upload the photo, please try again.", nil)
+                                       delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                              otherButtonTitles:nil] show];
+            self.attachmentsButton.hidden = NO;
+            [self showButtons];
+        }
+        else {
+            // They already hit the send button
+            if (self.sending) {
+                [self submit];
+            }
+        }
+    }];
 }
 
 @end

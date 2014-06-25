@@ -31,6 +31,7 @@ typedef void (^ABXRequestCompletion)(ABXResponseCode responseCode, NSInteger htt
 - (NSURLSessionDataTask*)GET:(NSString*)path params:(NSDictionary*)params complete:(ABXRequestCompletion)complete;
 
 - (NSURLSessionDataTask*)POST:(NSString*)path params:(NSDictionary*)params complete:(ABXRequestCompletion)complete;
+- (NSURLSessionDataTask*)POSTImage:(NSString*)path image:(UIImage*)image complete:(ABXRequestCompletion)complete;
 
 - (NSURLSessionDataTask*)PUT:(NSString*)path params:(NSDictionary*)params complete:(ABXRequestCompletion)complete;
 

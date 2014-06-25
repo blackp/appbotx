@@ -39,4 +39,34 @@
     return ceil(size.height);
 }
 
+- (CGFloat)widthToFitFont:(UIFont*)font
+{
+    CGSize size;
+    CGSize constraintSize = CGSizeMake(CGFLOAT_MAX, font.lineHeight);
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+        size = [self boundingRectWithSize:constraintSize
+                                  options:NSStringDrawingUsesLineFragmentOrigin
+                               attributes:@{NSFontAttributeName:font}
+                                  context:nil].size;
+    }
+    else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
+        
+        size = [self sizeWithFont:font
+                constrainedToSize:constraintSize
+                    lineBreakMode:NSLineBreakByTruncatingTail];
+        
+#pragma clang diagnostic pop
+    }
+#else
+    size = [self sizeWithFont:font
+            constrainedToSize:constraintSize
+                lineBreakMode:UILineBreakByTruncatingTail];
+#endif
+    
+    return ceil(size.width);
+}
+
 @end

@@ -16,6 +16,7 @@
 
 + (NSURLSessionDataTask*)submit:(NSString*)email
                        feedback:(NSString*)feedback
+                    attachments:(NSArray*)attachments
                        metaData:(NSDictionary*)metaData
                        complete:(void(^)(ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete
 {
@@ -28,6 +29,9 @@
     }
     if (metaData) {
         [params setObject:metaData forKey:@"meta_data"];
+    }
+    if (attachments.count > 0) {
+        [params setObject:[attachments valueForKeyPath:@"identifier"] forKey:@"attachment_ids"];
     }
     
     return [[ABXApiClient instance] POST:@"issues"

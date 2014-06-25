@@ -80,6 +80,37 @@ static NSString *kAppbotUrl = @"https://api.appbot.co/v1";
     return [self httpBodyRequest:@"PUT" path:path params:params complete:complete];
 }
 
+- (NSURLSessionDataTask*)POSTImage:(NSString*)path image:(UIImage*)image complete:(ABXRequestCompletion)complete
+{
+    NSDictionary *parameters = [self combineDefaultParamsWith:@{}];
+    
+    // Create our URL
+    NSURL *url = [[NSURL URLWithString:kAppbotUrl] URLByAppendingPathComponent:path];
+    NSString *query = [parameters queryStringValue];
+    url = [NSURL URLWithString:[[url absoluteString] stringByAppendingFormat:url.query ? @"&%@" : @"?%@", query]];
+    
+    // Request
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.allowsCellularAccess = YES;
+    request.HTTPMethod = @"POST";
+    
+    // Boundary
+    NSString *boundary = @"0Xdfdfegsdfsd6fRD";
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+    
+    // Attachment body
+    NSMutableData *body = [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@.png\"\r\n", [[NSUUID UUID] UUIDString]] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImagePNGRepresentation(image)];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:body];
+    
+    return [self performRequest:request complete:complete];
+}
+
 - (NSURLSessionDataTask*)httpBodyRequest:(NSString*)method path:(NSString*)path params:(NSDictionary*)params complete:(ABXRequestCompletion)complete
 {
     NSDictionary *parameters = [self combineDefaultParamsWith:params];

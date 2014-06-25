@@ -37,6 +37,7 @@
 		E039FD9B192C5BFB00BA0B76 /* ABXVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = E039FD9A192C5BFB00BA0B76 /* ABXVersion.m */; };
 		E039FD9E192C843000BA0B76 /* ABXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E039FD9D192C843000BA0B76 /* ABXModel.m */; };
 		E039FDA1192C8F7A00BA0B76 /* ABXIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = E039FDA0192C8F7A00BA0B76 /* ABXIssue.m */; };
+		E0484E7D195A6BBD001AFD5C /* ABXAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = E0484E7C195A6BBD001AFD5C /* ABXAttachment.m */; };
 		E0B113D419481EB2000E873E /* ABXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B113D319481EB2000E873E /* ABXNavigationController.m */; };
 		E0B114881949293B000E873E /* NSString+ABXSizing.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B114871949293B000E873E /* NSString+ABXSizing.m */; };
 		E0C5377F192CC7BB00858D01 /* ABXFAQsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5377E192CC7BB00858D01 /* ABXFAQsViewController.m */; };
@@ -111,6 +112,8 @@
 		E039FD9D192C843000BA0B76 /* ABXModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXModel.m; sourceTree = "<group>"; };
 		E039FD9F192C8F7A00BA0B76 /* ABXIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXIssue.h; sourceTree = "<group>"; };
 		E039FDA0192C8F7A00BA0B76 /* ABXIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXIssue.m; sourceTree = "<group>"; };
+		E0484E7B195A6BBD001AFD5C /* ABXAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXAttachment.h; sourceTree = "<group>"; };
+		E0484E7C195A6BBD001AFD5C /* ABXAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXAttachment.m; sourceTree = "<group>"; };
 		E0B113D219481EB2000E873E /* ABXNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXNavigationController.h; sourceTree = "<group>"; };
 		E0B113D319481EB2000E873E /* ABXNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXNavigationController.m; sourceTree = "<group>"; };
 		E0B114861949293B000E873E /* NSString+ABXSizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ABXSizing.h"; sourceTree = "<group>"; };
@@ -276,6 +279,8 @@
 				E039FD9A192C5BFB00BA0B76 /* ABXVersion.m */,
 				E039FD9F192C8F7A00BA0B76 /* ABXIssue.h */,
 				E039FDA0192C8F7A00BA0B76 /* ABXIssue.m */,
+				E0484E7B195A6BBD001AFD5C /* ABXAttachment.h */,
+				E0484E7C195A6BBD001AFD5C /* ABXAttachment.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -413,6 +418,7 @@
 				E039FD9B192C5BFB00BA0B76 /* ABXVersion.m in Sources */,
 				E0C537C7192DCC7500858D01 /* ABXVersionsViewController.m in Sources */,
 				E039FD9E192C843000BA0B76 /* ABXModel.m in Sources */,
+				E0484E7D195A6BBD001AFD5C /* ABXAttachment.m in Sources */,
 				E0369CEB1938233F0082ADB7 /* ABXKeychain.m in Sources */,
 				E039FD8D192C486000BA0B76 /* NSDictionary+ABXNSNullAsNull.m in Sources */,
 				E039FD87192C2E3100BA0B76 /* NSDictionary+ABXQueryString.m in Sources */,
