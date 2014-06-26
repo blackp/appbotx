@@ -12,6 +12,7 @@
 #import "ABXFeedbackViewController.h"
 #import "ABXFAQTableViewCell.h"
 #import "ABXNavigationController.h"
+#import "NSString+ABXLocalized.h"
 
 @interface ABXFAQsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
@@ -42,7 +43,7 @@
     [super viewDidLoad];
     
     // Title
-    self.title = NSLocalizedString(@"FAQs", nil);
+    self.title = [@"FAQs" localizedString];
     
     // Setup our UI components
     [self setupFaqUI];
@@ -50,7 +51,7 @@
     // Fetch
     if (![ABXApiClient isInternetReachable]) {
         [self.activityView stopAnimating];
-        [self showError:NSLocalizedString(@"There is no internet connection.\r\n\r\nPlease connect to continue.", nil)];
+        [self showError:[@"No Internet" localizedString]];
     }
     else {
         [self fetchFAQs];
@@ -81,13 +82,13 @@
     // Search bar
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
     self.searchBar.delegate = self;
-    self.searchBar.placeholder = NSLocalizedString(@"Search...", nil);
+    self.searchBar.placeholder = [@"Search..." localizedString];
     self.tableView.tableHeaderView = self.searchBar;
     
     // Nav buttons
     if (!self.hideContactButton) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                                  initWithTitle:NSLocalizedString(@"Contact", nil)
+                                                  initWithTitle:[@"Contact" localizedString]
                                                   style:UIBarButtonItemStylePlain
                                                   target:self
                                                   action:@selector(onContact)];
@@ -108,14 +109,14 @@
             [self.tableView reloadData];
             
             if (faqs.count == 0) {
-                [self showError:NSLocalizedString(@"No FAQs found.", nil)];
+                [self showError:[@"No FAQs" localizedString]];
             }
             else {
                 self.tableView.hidden = NO;
             }
         }
         else {
-            [self showError:NSLocalizedString(@"Unable to fetch FAQs.\r\nplease try again later", nil)];
+            [self showError:[@"FAQ Error" localizedString]];
         }
     }];
 }
@@ -125,7 +126,7 @@
 - (void)onContact
 {
     [ABXFeedbackViewController showFromController:self
-                                      placeholder:NSLocalizedString(@"How can we help?", nil)
+                                      placeholder:[@"How can we help?" localizedString]
                                             email:nil
                                          metaData:self.contactMetaData
                                             image:nil];
@@ -210,7 +211,7 @@
             self.errorLabel.hidden = YES;
         }
         else {
-            [self showError:NSLocalizedString(@"No matches found", nil)];
+            [self showError:[@"No matches found" localizedString]];
         }
     }
     else {

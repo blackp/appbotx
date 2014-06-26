@@ -38,6 +38,8 @@
 		E039FD9E192C843000BA0B76 /* ABXModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E039FD9D192C843000BA0B76 /* ABXModel.m */; };
 		E039FDA1192C8F7A00BA0B76 /* ABXIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = E039FDA0192C8F7A00BA0B76 /* ABXIssue.m */; };
 		E0484E7D195A6BBD001AFD5C /* ABXAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = E0484E7C195A6BBD001AFD5C /* ABXAttachment.m */; };
+		E0B026A3195BAE430065C07B /* AppbotX.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E0B026A2195BAE430065C07B /* AppbotX.bundle */; };
+		E0B026A6195BAEC00065C07B /* NSString+ABXLocalized.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B026A5195BAEC00065C07B /* NSString+ABXLocalized.m */; };
 		E0B113D419481EB2000E873E /* ABXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B113D319481EB2000E873E /* ABXNavigationController.m */; };
 		E0B114881949293B000E873E /* NSString+ABXSizing.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B114871949293B000E873E /* NSString+ABXSizing.m */; };
 		E0C5377F192CC7BB00858D01 /* ABXFAQsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5377E192CC7BB00858D01 /* ABXFAQsViewController.m */; };
@@ -114,6 +116,9 @@
 		E039FDA0192C8F7A00BA0B76 /* ABXIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXIssue.m; sourceTree = "<group>"; };
 		E0484E7B195A6BBD001AFD5C /* ABXAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXAttachment.h; sourceTree = "<group>"; };
 		E0484E7C195A6BBD001AFD5C /* ABXAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXAttachment.m; sourceTree = "<group>"; };
+		E0B026A2195BAE430065C07B /* AppbotX.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AppbotX.bundle; sourceTree = "<group>"; };
+		E0B026A4195BAEC00065C07B /* NSString+ABXLocalized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ABXLocalized.h"; sourceTree = "<group>"; };
+		E0B026A5195BAEC00065C07B /* NSString+ABXLocalized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ABXLocalized.m"; sourceTree = "<group>"; };
 		E0B113D219481EB2000E873E /* ABXNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXNavigationController.h; sourceTree = "<group>"; };
 		E0B113D319481EB2000E873E /* ABXNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXNavigationController.m; sourceTree = "<group>"; };
 		E0B114861949293B000E873E /* NSString+ABXSizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ABXSizing.h"; sourceTree = "<group>"; };
@@ -219,6 +224,7 @@
 				E039FD82192C29E600BA0B76 /* Models */,
 				E039FD83192C29E600BA0B76 /* Views */,
 				E0369CF5193852BD0082ADB7 /* ABX.h */,
+				E0B026A2195BAE430065C07B /* AppbotX.bundle */,
 			);
 			name = AppbotX;
 			path = ../Classes;
@@ -241,6 +247,8 @@
 				E0B114871949293B000E873E /* NSString+ABXSizing.m */,
 				E03971CD19515C1C000742B8 /* ABXAppStore.h */,
 				E03971CE19515C1C000742B8 /* ABXAppStore.m */,
+				E0B026A4195BAEC00065C07B /* NSString+ABXLocalized.h */,
+				E0B026A5195BAEC00065C07B /* NSString+ABXLocalized.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -382,6 +390,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0B026A3195BAE430065C07B /* AppbotX.bundle in Resources */,
 				E039FD56192C290E00BA0B76 /* InfoPlist.strings in Resources */,
 				E039FD5E192C290E00BA0B76 /* Images.xcassets in Resources */,
 				E039FD95192C521B00BA0B76 /* Storyboard.storyboard in Resources */,
@@ -416,6 +425,7 @@
 				E039FD90192C4DF500BA0B76 /* ABXFaq.m in Sources */,
 				E0C537CA192DCDCB00858D01 /* ABXBaseListViewController.m in Sources */,
 				E039FD9B192C5BFB00BA0B76 /* ABXVersion.m in Sources */,
+				E0B026A6195BAEC00065C07B /* NSString+ABXLocalized.m in Sources */,
 				E0C537C7192DCC7500858D01 /* ABXVersionsViewController.m in Sources */,
 				E039FD9E192C843000BA0B76 /* ABXModel.m in Sources */,
 				E0484E7D195A6BBD001AFD5C /* ABXAttachment.m in Sources */,

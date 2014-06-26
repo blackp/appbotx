@@ -10,6 +10,7 @@
 
 #import "ABXVersion.h"
 #import "NSString+ABXSizing.h"
+#import "NSString+ABXLocalized.h"
 
 @interface ABXVersionTableViewCell ()
 
@@ -56,7 +57,7 @@
 
 - (void)setVersion:(ABXVersion *)version
 {
-    self.versionLabel.text = [NSLocalizedString(@"Version ", nil) stringByAppendingString:version.version];
+    self.versionLabel.text = [[[@"Version" localizedString] stringByAppendingString:@" "] stringByAppendingString:version.version];
     
     static dispatch_once_t onceToken;
     static NSDateFormatter *dateFormatter = nil;

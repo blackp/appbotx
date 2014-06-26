@@ -8,6 +8,8 @@
 
 #import "ABXPromptView.h"
 
+#import "NSString+ABXLocalized.h"
+
 @interface ABXPromptView ()
 
 @property (nonatomic, strong) UIView *container;
@@ -56,7 +58,7 @@
     self.label.textAlignment = NSTextAlignmentCenter;
     self.label.numberOfLines = 0;
     self.label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15];
-    self.label.text = [[NSLocalizedString(@"What do you think about ", nil) stringByAppendingString:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]] stringByAppendingString:@"?"];
+    self.label.text = [[[@"What do you think about " localizedString] stringByAppendingString:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]] stringByAppendingString:@"?"];
     [self.container addSubview:self.label];
     
     
@@ -65,7 +67,7 @@
     self.leftButton.backgroundColor = [UIColor colorWithWhite:0.6 alpha:1];
     self.leftButton.layer.cornerRadius = 4;
     self.leftButton.layer.masksToBounds = YES;
-    [self.leftButton setTitle:NSLocalizedString(@"I Love It!", nil) forState:UIControlStateNormal];
+    [self.leftButton setTitle:[@"I Love It!" localizedString] forState:UIControlStateNormal];
     [self.leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.leftButton.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.leftButton addTarget:self action:@selector(onLove) forControlEvents:UIControlEventTouchUpInside];
@@ -76,7 +78,7 @@
     self.rightButton.backgroundColor = [UIColor colorWithWhite:0.6 alpha:1];
     self.rightButton.layer.cornerRadius = 4;
     self.rightButton.layer.masksToBounds = YES;
-    [self.rightButton setTitle:NSLocalizedString(@"Could Be Better", nil) forState:UIControlStateNormal];
+    [self.rightButton setTitle:[@"Could Be Better" localizedString] forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.rightButton.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.rightButton addTarget:self action:@selector(onImprove) forControlEvents:UIControlEventTouchUpInside];
@@ -101,9 +103,9 @@
     self.liked = YES;
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.label.text = NSLocalizedString(@"Great! Could you leave us a nice review?\r\nIt really helps.", nil);
-                         [self.largeButton setTitle:NSLocalizedString(@"Leave a Review", nil) forState:UIControlStateNormal];
-                         [self.closeButton setTitle:NSLocalizedString(@"no thanks", nil) forState:UIControlStateNormal];
+                         self.label.text = [@"Great! Could you leave us a nice review?\r\nIt really helps."  localizedString];
+                         [self.largeButton setTitle:[@"Leave a Review" localizedString] forState:UIControlStateNormal];
+                         [self.closeButton setTitle:[@"no thanks" localizedString] forState:UIControlStateNormal];
                          self.leftButton.alpha = 0;
                          self.rightButton.alpha = 0;
                          self.largeButton.alpha = 1;
@@ -115,9 +117,9 @@
     self.liked = NO;
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.label.text = NSLocalizedString(@"Could you tell us how we could improve?", nil);
-                         [self.largeButton setTitle:NSLocalizedString(@"Send Feedback", nil) forState:UIControlStateNormal];
-                         [self.closeButton setTitle:NSLocalizedString(@"no thanks", nil) forState:UIControlStateNormal];
+                         self.label.text = [@"Could you tell us how we could improve?" localizedString];
+                         [self.largeButton setTitle:[@"Send Feedback" localizedString] forState:UIControlStateNormal];
+                         [self.closeButton setTitle:[@"no thanks" localizedString] forState:UIControlStateNormal];
                          self.leftButton.alpha = 0;
                          self.rightButton.alpha = 0;
                          self.largeButton.alpha = 1;

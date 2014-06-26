@@ -10,6 +10,8 @@
 
 #import "ABXNavigationController.h"
 
+#import "NSString+ABXLocalized.h"
+
 @interface ABXBaseListViewController()
 
 @end
@@ -67,7 +69,7 @@
     appbotButton.frame = CGRectMake(0, CGRectGetHeight(self.view.frame) - 33, CGRectGetWidth(self.view.frame), 33);
     appbotButton.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     [appbotButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [appbotButton setTitle:@"Powered by Appbot" forState:UIControlStateNormal];
+    [appbotButton setTitle:[[@"Powered by" localizedString] stringByAppendingString:@" Appbot"] forState:UIControlStateNormal];
     appbotButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     appbotButton.titleLabel.font = [UIFont systemFontOfSize:13];
     [appbotButton addTarget:self action:@selector(onAppbot) forControlEvents:UIControlEventTouchUpInside];

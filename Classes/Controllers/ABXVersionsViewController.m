@@ -9,6 +9,7 @@
 
 #import "ABXVersion.h"
 #import "ABXVersionTableViewCell.h"
+#import "NSString+ABXLocalized.h"
 
 @interface ABXVersionsViewController ()
 
@@ -22,11 +23,11 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"Versions", nil);
+    self.title = [@"Versions" localizedString];
     
     if (![ABXApiClient isInternetReachable]) {
         [self.activityView stopAnimating];
-        [self showError:NSLocalizedString(@"There is no internet connection.\r\n\r\nPlease connect to continue.", nil)];
+        [self showError:[@"No Internet" localizedString]];
     }
     else {
         [self fetchVersions];
@@ -57,11 +58,11 @@
             [self.tableView reloadData];
             
             if (versions.count == 0) {
-                [self showError:NSLocalizedString(@"No versions found.", nil)];
+                [self showError:[@"No Versions" localizedString]];
             }
         }
         else {
-            [self showError:NSLocalizedString(@"Unable to fetch versions.\r\nPlease try again later", nil)];
+            [self showError:[@"Versions Error" localizedString]];
         }
     }];
 }

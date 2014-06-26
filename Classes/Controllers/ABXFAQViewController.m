@@ -9,6 +9,7 @@
 
 #import "ABXFaq.h"
 #import "ABXFeedbackViewController.h"
+#import "NSString+ABXLocalized.h"
 
 @interface ABXFAQViewController ()<UIWebViewDelegate>
 
@@ -39,7 +40,7 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"FAQ", nil);
+    self.title = [@"FAQ" localizedString];
     
     // Webview
     CGRect bounds = self.view.bounds;
@@ -55,7 +56,7 @@
     // Nav buttons
     if (!self.hideContactButton) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                                  initWithTitle:NSLocalizedString(@"Contact", nil)
+                                                  initWithTitle:[@"Contact" localizedString]
                                                   style:UIBarButtonItemStylePlain
                                                   target:self
                                                   action:@selector(onContact)];
@@ -95,7 +96,7 @@
 - (void)onContact
 {
     [ABXFeedbackViewController showFromController:self
-                                      placeholder:NSLocalizedString(@"How can we help?", nil)];
+                                      placeholder:[@"How can we help?" localizedString]];
 }
 
 #pragma mark - UI
@@ -115,7 +116,7 @@
     // Voting label
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 100, 44)];
     label.font = [UIFont systemFontOfSize:15];
-    label.text = NSLocalizedString(@"Helpful?", nil);
+    label.text = [@"Helpful?" localizedString];
     label.backgroundColor = [UIColor clearColor];
     [bottom addSubview:label];
     
@@ -129,7 +130,7 @@
     }
     yesButton.layer.cornerRadius = 4;
     yesButton.layer.masksToBounds = YES;
-    [yesButton setTitle:NSLocalizedString(@"Yes", nil) forState:UIControlStateNormal];
+    [yesButton setTitle:[@"Yes" localizedString] forState:UIControlStateNormal];
     yesButton.titleLabel.font = [UIFont systemFontOfSize:15];
     yesButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     [yesButton addTarget:self action:@selector(onUpVote) forControlEvents:UIControlEventTouchUpInside];
@@ -145,7 +146,7 @@
     }
     noButton.layer.cornerRadius = 4;
     noButton.layer.masksToBounds = YES;
-    [noButton setTitle:NSLocalizedString(@"No", nil) forState:UIControlStateNormal];
+    [noButton setTitle:[@"No" localizedString] forState:UIControlStateNormal];
     noButton.titleLabel.font = [UIFont systemFontOfSize:15];
     noButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     [noButton addTarget:self action:@selector(onDownVote) forControlEvents:UIControlEventTouchUpInside];
@@ -184,7 +185,7 @@
     // Label
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, 200, 44)];
     label.font = [UIFont systemFontOfSize:15];
-    label.text = NSLocalizedString(@"One moment please...", nil);
+    label.text = [@"One moment please..." localizedString];
     label.backgroundColor = [UIColor clearColor];
     [self.bottom addSubview:label];
 }
@@ -196,7 +197,7 @@
     // Label
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 44)];
     label.font = [UIFont systemFontOfSize:15];
-    label.text = NSLocalizedString(@"Thanks for your feedback.", nil);
+    label.text = [@"Thanks for your feedback." localizedString];
     label.backgroundColor = [UIColor clearColor];
     [self.bottom addSubview:label];
 }

@@ -11,6 +11,7 @@
 #import "ABXNotification.h"
 
 #import "NSString+ABXSizing.h"
+#import "NSString+ABXLocalized.h"
 
 @interface ABXNotificationView ()
 
@@ -74,7 +75,7 @@
     // Close Button
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.tintColor = buttonColor;
-    [button setTitle:NSLocalizedString(@"Close", nil) forState:UIControlStateNormal];
+    [button setTitle:[@"Close" localizedString] forState:UIControlStateNormal];
     if (actionText) {
         button.frame = CGRectMake(CGRectGetWidth(view.bounds) / 2, totalHeight - 40, kMaxWidth / 2, 40);
     }

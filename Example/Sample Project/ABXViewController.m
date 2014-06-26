@@ -10,6 +10,7 @@
 
 #import "ABX.h"
 #import "ABXPromptView.h"
+#import "NSString+ABXLocalized.h"
 
 @interface ABXViewController ()<ABXPromptViewDelegate>
 
@@ -154,7 +155,7 @@ static NSString* const kiTunesID = @"650762525";
     [[[UIAlertView alloc] initWithTitle:title
                                 message:message
                                delegate:nil
-                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                      cancelButtonTitle:[@"OK" localizedString]
                       otherButtonTitles:nil] show];
 }
 

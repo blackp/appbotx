@@ -11,6 +11,7 @@
 #import "ABXAppStore.h"
 #import "ABXVersion.h"
 #import "ABXVersionsViewController.h"
+#import "NSString+ABXLocalized.h"
 
 @implementation ABXVersionNotificationView
 
@@ -28,8 +29,8 @@
                 [currentVersion isLiveVersion:itunesId country:@"us" complete:^(BOOL matches) {
                     if (matches) {
                         // Show the view
-                        [ABXNotificationView show:[NSString stringWithFormat:@"An update to version %@ is available", currentVersion.version]
-                                       actionText:NSLocalizedString(@"Update", nil)
+                        [ABXNotificationView show:[NSString stringWithFormat:[@"An update to version %@ is available" localizedString], currentVersion.version]
+                                       actionText:[@"Update" localizedString]
                                   backgroundColor:backgroundColor
                                         textColor:textColor
                                       buttonColor:buttonColor
@@ -58,8 +59,8 @@
                 // We got a match!
                 if (![version hasSeen]) {
                     // Show the view
-                    [ABXNotificationView show:[NSString stringWithFormat:@"You've just updated to v%@", version.version]
-                                   actionText:NSLocalizedString(@"Learn More", nil)
+                    [ABXNotificationView show:[NSString stringWithFormat:[@"You've just updated to v%@" localizedString], version.version]
+                                   actionText:[@"Learn More" localizedString]
                               backgroundColor:backgroundColor
                                     textColor:textColor
                                   buttonColor:buttonColor

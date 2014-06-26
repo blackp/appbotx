@@ -9,6 +9,7 @@
 #import "ABXNotificationsViewController.h"
 
 #import "ABXNotificationTableViewCell.h"
+#import "NSString+ABXLocalized.h"
 
 @interface ABXNotificationsViewController ()
 
@@ -22,11 +23,11 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"Notifications", nil);
+    self.title = [@"Notifications" localizedString];
     
     if (![ABXApiClient isInternetReachable]) {
         [self.activityView stopAnimating];
-        [self showError:NSLocalizedString(@"There is no internet connection.\r\n\r\nPlease connect to continue.", nil)];
+        [self showError:[@"No Internet" localizedString]];
     }
     else {
         [self fetchNotifications];
@@ -57,11 +58,11 @@
             [self.tableView reloadData];
             
             if (notifications.count == 0) {
-                [self showError:NSLocalizedString(@"No notifications found.", nil)];
+                [self showError:[@"No Notifications" localizedString]];
             }
         }
         else {
-            [self showError:NSLocalizedString(@"Unable to fetch notifications.\r\nPlease try again later", nil)];
+            [self showError:[@"Notifications Error" localizedString]];
         }
     }];
 }
