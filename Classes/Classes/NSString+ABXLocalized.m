@@ -42,7 +42,11 @@
     });
     
     // Loop through the prefered languages
-    for (NSString *language in [NSLocale preferredLanguages]) {
+    if ([NSLocale preferredLanguages].count > 0) {
+        // Only the first language is valuable
+        // the rest seems to be jibberish
+        NSString *language = [[[NSLocale preferredLanguages] firstObject] lowercaseString];
+        
         // First try the language
         NSString *s = [self localizedStringForLanguage:language];
         if (s.length > 0) {
@@ -66,10 +70,11 @@
 
 - (NSString*)localizedStringForLanguage:(NSString*)language
 {
+    static NSString *kNilValue = @"_na_";
     // First check if the user has defined a localisation
     if ([[[NSBundle mainBundle] localizations] containsObject:language]) {
-        NSString *s = [[NSBundle mainBundle] localizedStringForKey:self value:nil table:nil];
-        if (s.length > 0) {
+        NSString *s = [[NSBundle mainBundle] localizedStringForKey:self value:kNilValue table:nil];
+        if (s.length > 0 && ![s isEqualToString:kNilValue]) {
             // Use their localisation
             return s;
         }
@@ -79,7 +84,7 @@
     if ([[[self appbotXBundle] localizations] containsObject:language]) {
         NSBundle *bundle = [[self appbotXBundles] objectForKey:language];
         if (!bundle) {
-            NSString *path = [bundle pathForResource:language ofType:@"lproj"];
+            NSString *path = [[self appbotXBundle] pathForResource:language ofType:@"lproj"];
             bundle = [NSBundle bundleWithPath:path];
             if (bundle) {
                 // Cache the bundle
@@ -88,8 +93,8 @@
         }
         
         if (bundle) {
-            NSString *s = [bundle localizedStringForKey:self value:nil table:nil];
-            if (s.length > 0) {
+            NSString *s = [bundle localizedStringForKey:self value:kNilValue table:nil];
+            if (s.length > 0 && ![s isEqualToString:kNilValue]) {
                 // Use our localisation
                 return s;
             }

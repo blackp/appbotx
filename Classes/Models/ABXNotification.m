@@ -18,9 +18,6 @@ PROTECTED_ABXMODEL
     self = [super init];
     if (self) {
         self.identifier = [attributes objectForKeyNulled:@"id"];
-        self.message = [attributes objectForKeyNulled:@"message"];
-        self.actionLabel = [attributes objectForKeyNulled:@"action_label"];
-        self.actionUrl = [attributes objectForKeyNulled:@"action_url"];
         
         // Date formatter, cache as they are expensive to create
         static dispatch_once_t onceToken;
@@ -34,6 +31,34 @@ PROTECTED_ABXMODEL
         if (createdAtString != nil) {
             self.createdAt = [formatter dateFromString:createdAtString];
         }
+        
+        // Look for a matching localisation
+        if ([NSLocale preferredLanguages].count > 0) {
+            NSString *language = [[NSLocale preferredLanguages] firstObject];
+            
+            // Make sure we don't match the default language code
+            NSString *defaultLanguage = [attributes valueForKeyPath:@"language.code"];
+            if (!defaultLanguage || ![language caseInsensitiveCompare:defaultLanguage] == NSOrderedSame) {
+                // Look for an exact match
+                [self lookForLocalisation:attributes language:language];
+                
+                // Look for a partial match (e.g. match en to en-au)
+                if (self.message == nil) {
+                    NSArray *parts = [language componentsSeparatedByString:@"-"];
+                    if (parts.count > 1) {
+                        language = [parts firstObject];
+                        [self lookForLocalisation:attributes language:language];
+                    }
+                }
+            }
+        }
+        
+        // Fall back to the default if we have nothing
+        if (self.message == nil) {
+            self.message = [attributes objectForKeyNulled:@"message"];
+            self.actionLabel = [attributes objectForKeyNulled:@"action_label"];
+            self.actionUrl = [attributes objectForKeyNulled:@"action_url"];
+        }
     }
     return self;
 }
@@ -41,6 +66,20 @@ PROTECTED_ABXMODEL
 + (id)createWithAttributes:(NSDictionary*)attributes
 {
     return [[ABXNotification alloc] initWithAttributes:attributes];
+}
+
+- (void)lookForLocalisation:(NSDictionary*)attributes language:(NSString*)language
+{
+    for (NSDictionary *localisation in [attributes objectForKeyNulled:@"localizations"]) {
+        NSString *languageCode = [localisation valueForKeyPath:@"language.code"];
+        if (languageCode && [languageCode caseInsensitiveCompare:language] == NSOrderedSame) {
+            // Matching localisation
+            self.message = [localisation objectForKeyNulled:@"message"];
+            self.actionLabel = [localisation objectForKeyNulled:@"action_label"];
+            self.actionUrl = [localisation objectForKeyNulled:@"action_url"];
+            break;
+        }
+    }
 }
 
 + (NSURLSessionDataTask*)fetchActive:(void(^)(NSArray *notifications, ABXResponseCode responseCode, NSInteger httpCode, NSError *error))complete
