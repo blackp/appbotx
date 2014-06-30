@@ -30,11 +30,10 @@
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         // Text
-        self.questionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 20, CGRectGetWidth(self.contentView.bounds) - 30, 0)];
+        self.questionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 20, CGRectGetWidth(self.bounds) - 45, 0)];
         self.questionLabel.textColor = [UIColor blackColor];
         self.questionLabel.font = [ABXFAQTableViewCell font];
         self.questionLabel.numberOfLines = 0;
-        self.questionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:self.questionLabel];
     }
     return self;
@@ -45,8 +44,10 @@
     [super layoutSubviews];
     
     CGRect r = self.questionLabel.frame;
-    r.size.height = [_faq.question heightForWidth:CGRectGetWidth(self.contentView.bounds) - 30
+    NSLog(@"lo - %f", self.bounds.size.width);
+    r.size.height = [_faq.question heightForWidth:CGRectGetWidth(self.bounds) - 45
                                           andFont:[ABXFAQTableViewCell font]];
+    r.size.width = CGRectGetWidth(self.bounds) - 45;
     self.questionLabel.frame = r;
 }
 
@@ -69,7 +70,8 @@
 
 + (CGFloat)heightForFAQ:(ABXFaq*)faq withWidth:(CGFloat)width
 {
-    return [faq.question heightForWidth:width - 30 andFont:[self font]] + 40;
+    NSLog(@"h - %f", width);
+    return [faq.question heightForWidth:width - 45 andFont:[self font]] + 40;
 }
 
 @end
