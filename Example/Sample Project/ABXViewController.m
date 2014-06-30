@@ -124,7 +124,7 @@ static NSString* const kiTunesID = @"650762525";
 
 - (IBAction)showFeedback:(id)sender
 {
-    [ABXFeedbackViewController showFromController:self placeholder:nil email:nil metaData:nil image:nil ];
+    [ABXFeedbackViewController showFromController:self placeholder:nil email:nil metaData:nil image:nil];
 }
 
 - (IBAction)showFeedbackWithImage:(id)sender
