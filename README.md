@@ -37,7 +37,7 @@ To run the example project; clone the repo, and open "Sample Project.xcodeproj" 
 
 ### FAQ
 
-### Default UI
+#### Default UI
 To show the default UI simply call the showFromController helper method on ABXFAQsViewController.
 
 	[ABXFAQsViewController showFromController:self hideContactButton:NO contactMetaData:nil];
@@ -54,7 +54,7 @@ To show the default UI simply call the showFromController helper method on ABXFA
 	
 #### Fetch Manually
 
-	    [ABXFaq fetch:^(NSArray *faqs, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
+	[ABXFaq fetch:^(NSArray *faqs, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
         switch (responseCode) {
             case ABXResponseCodeSuccess: {
             	// Success, use faqs
@@ -72,6 +72,8 @@ To show the default UI simply call the showFromController helper method on ABXFA
 * **responseCode** - response code, ABXResponseCodeSuccess for success, see enum for errors.
 * **httpCode** - the http code, 200 for success etc.
 * **error** - the error, nil if success.
+
+---
 
 ### Feedback
 
@@ -91,10 +93,14 @@ To show the default UI simply call the showFromController helper method on ABXFe
 
 	ABXFeedbackViewController *controller = [[ABXFeedbackViewController alloc] init];
 	[self.navigationController pushViewController:controller animated:YES];
+	
+---	
 
 ### Versions
 
 Documentation coming soon, check the example.
+
+---
 
 ### Notifications
 

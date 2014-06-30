@@ -11,6 +11,7 @@
 #import "ABX.h"
 #import "ABXPromptView.h"
 #import "NSString+ABXLocalized.h"
+#import "UIViewController+ABXScreenshot.h"
 
 @interface ABXViewController ()<ABXPromptViewDelegate>
 
@@ -132,20 +133,6 @@ static NSString* const kiTunesID = @"650762525";
     // An example of the feedback window that you might launch from a 'report an issue' button
     // Where some meta data and a screenshot is attached
     [ABXFeedbackViewController showFromController:self placeholder:nil email:nil metaData:@{ @"BugPrompt" : @YES } image:[self takeScreenshot] ];
-}
-
-#pragma mark - Screenshot
-
-- (UIImage*)takeScreenshot
-{
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
-        UIGraphicsBeginImageContextWithOptions(self.view.window.bounds.size, NO, [UIScreen mainScreen].scale);
-    else
-        UIGraphicsBeginImageContext(self.view.window.bounds.size);
-    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
 }
 
 #pragma mark - Alert

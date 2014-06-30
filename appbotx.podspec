@@ -6,7 +6,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = "AppbotX"
-  s.version          = "0.5.0"
+  s.version          = "0.5.1"
   s.summary          = "AppbotX is an Obj-C lib for the Appbot server."
   s.description      = <<-DESC
                        DESC
@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
   s.author           = { "Stuart Hall" => "stuartkhall@gmail.com" }
   s.source           = { :git => "http://github.com/appbotx/appbotx.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/stuartkhall'
+  s.resources        = 'Classes/AppbotX.bundle'
 
   s.platform     = :ios, '6.0'
   s.requires_arc = true

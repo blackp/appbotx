@@ -40,6 +40,7 @@
 		E0484E7D195A6BBD001AFD5C /* ABXAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = E0484E7C195A6BBD001AFD5C /* ABXAttachment.m */; };
 		E0B026A3195BAE430065C07B /* AppbotX.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E0B026A2195BAE430065C07B /* AppbotX.bundle */; };
 		E0B026A6195BAEC00065C07B /* NSString+ABXLocalized.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B026A5195BAEC00065C07B /* NSString+ABXLocalized.m */; };
+		E0B026F2196119E80065C07B /* UIViewController+ABXScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B026F1196119E80065C07B /* UIViewController+ABXScreenshot.m */; };
 		E0B113D419481EB2000E873E /* ABXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B113D319481EB2000E873E /* ABXNavigationController.m */; };
 		E0B114881949293B000E873E /* NSString+ABXSizing.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B114871949293B000E873E /* NSString+ABXSizing.m */; };
 		E0C5377F192CC7BB00858D01 /* ABXFAQsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5377E192CC7BB00858D01 /* ABXFAQsViewController.m */; };
@@ -119,6 +120,8 @@
 		E0B026A2195BAE430065C07B /* AppbotX.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AppbotX.bundle; sourceTree = "<group>"; };
 		E0B026A4195BAEC00065C07B /* NSString+ABXLocalized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ABXLocalized.h"; sourceTree = "<group>"; };
 		E0B026A5195BAEC00065C07B /* NSString+ABXLocalized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ABXLocalized.m"; sourceTree = "<group>"; };
+		E0B026F0196119E80065C07B /* UIViewController+ABXScreenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ABXScreenshot.h"; sourceTree = "<group>"; };
+		E0B026F1196119E80065C07B /* UIViewController+ABXScreenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ABXScreenshot.m"; sourceTree = "<group>"; };
 		E0B113D219481EB2000E873E /* ABXNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABXNavigationController.h; sourceTree = "<group>"; };
 		E0B113D319481EB2000E873E /* ABXNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABXNavigationController.m; sourceTree = "<group>"; };
 		E0B114861949293B000E873E /* NSString+ABXSizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ABXSizing.h"; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				E03971CE19515C1C000742B8 /* ABXAppStore.m */,
 				E0B026A4195BAEC00065C07B /* NSString+ABXLocalized.h */,
 				E0B026A5195BAEC00065C07B /* NSString+ABXLocalized.m */,
+				E0B026F0196119E80065C07B /* UIViewController+ABXScreenshot.h */,
+				E0B026F1196119E80065C07B /* UIViewController+ABXScreenshot.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -435,6 +440,7 @@
 				E0B113D419481EB2000E873E /* ABXNavigationController.m in Sources */,
 				E0C53782192CD74F00858D01 /* ABXFAQViewController.m in Sources */,
 				E0D0E076194D0A8400756042 /* ABXFAQTableViewCell.m in Sources */,
+				E0B026F2196119E80065C07B /* UIViewController+ABXScreenshot.m in Sources */,
 				E0369CF9193869A90082ADB7 /* ABXPromptView.m in Sources */,
 				E03971CF19515C1C000742B8 /* ABXAppStore.m in Sources */,
 				E03971CC19515BAF000742B8 /* ABXVersionNotificationView.m in Sources */,
