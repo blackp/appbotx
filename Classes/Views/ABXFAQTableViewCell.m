@@ -44,7 +44,6 @@
     [super layoutSubviews];
     
     CGRect r = self.questionLabel.frame;
-    NSLog(@"lo - %f", self.bounds.size.width);
     r.size.height = [_faq.question heightForWidth:CGRectGetWidth(self.bounds) - 45
                                           andFont:[ABXFAQTableViewCell font]];
     r.size.width = CGRectGetWidth(self.bounds) - 45;
@@ -70,7 +69,6 @@
 
 + (CGFloat)heightForFAQ:(ABXFaq*)faq withWidth:(CGFloat)width
 {
-    NSLog(@"h - %f", width);
     return [faq.question heightForWidth:width - 45 andFont:[self font]] + 40;
 }
 
