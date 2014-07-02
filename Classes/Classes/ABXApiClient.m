@@ -36,6 +36,19 @@ static NSString *kAppbotUrl = @"https://api.appbot.co/v1";
     return client;
 }
 
+#pragma mark - Api Key
+
+- (void)setApiKey:(NSString *)apiKey
+{
+    _apiKey = apiKey;
+    
+    // Initialise
+    [self GET:@"app"
+       params:[self combineDefaultParamsWith:@{}]
+     complete:^(ABXResponseCode responseCode, NSInteger httpCode, NSError *error, id JSON) {
+     }];
+}
+
 #pragma mark - Init
 
 - (id)init
