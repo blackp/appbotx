@@ -105,7 +105,17 @@ Documentation coming soon, check the example.
 ### Notifications
 
 Documentation coming soon, check the example.
+
+## Localizing Strings
+
+You can change any of the default strings by using localization. All strings used can be found in AppbotX.bundle, but it will prefer strings declared in your local strings bundle.
+
+e.g.
+
+	"How can we help?" = "How can we help you with Sample App?";
 	
+See the sample app for an example.
+
 ## Communication
 
 * If you found a bug, [open an issue](https://github.com/appbotx/appbotx/issues).
