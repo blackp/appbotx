@@ -98,9 +98,61 @@ To show the default UI simply call the showFromController helper method on ABXFe
 
 ### Versions
 
-Documentation coming soon, check the example.
+#### Default UI
+
+Showing a list:
+
+	[ABXVersionsViewController showFromController:self];
+	
+* **controller** - required - the controller to be presented from.
+	
+Showing new versions / update text:
+
+    [ABXVersionNotificationView fetchAndShowInController:self foriTunesID:kiTunesID backgroundColor:[UIColor redColor] textColor:[UIColor blackColor] buttonColor:[UIColor whiteColor] complete:^(BOOL shown) {
+    // Here you may want to chain fetching notifications
+    // if it wasn't shown
+    }];
+
+* **controller** - required - the controller to be presented from.
+* **foriTunesID** - required - your iTunes identifier.
+* **backgroundColor** - required - the background color for the control.
+* **textColor** - required - the text color for the control.
+* **buttonColor** - required - the color for the buttons.
+* **complete** - optional - a callback when the operation has completed.
 
 ---
+
+#### Manually Fetching
+
+Fetch the list of versions:
+
+    [ABXVersion fetch:^(NSArray *versions, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
+        switch (responseCode) {
+            case ABXResponseCodeSuccess: {
+            }
+                break;
+                
+            default: {
+            }
+                break;
+        }
+    }];
+ 
+* **versions** array of ABXVersion objects.
+* **responseCode** - response code, ABXResponseCodeSuccess for success, see enum for errors.
+* **httpCode** - the http code, 200 for success etc.
+* **error** - the error, nil if success.
+
+Fetch the current version:
+
+    [ABXVersion fetchCurrentVersion:^(ABXVersion *version, ABXVersion *currentVersion, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
+    }];
+    
+* **version** the version matching the current build version.
+* **currentVersion** the latest version on the server.
+* **responseCode** - response code, ABXResponseCodeSuccess for success, see enum for errors.
+* **httpCode** - the http code, 200 for success etc.
+* **error** - the error, nil if success.
 
 ### Notifications
 
