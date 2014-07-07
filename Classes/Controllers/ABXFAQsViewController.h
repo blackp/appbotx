@@ -18,4 +18,9 @@
 @property (nonatomic, assign) BOOL hideContactButton;
 @property (nonatomic, strong) NSDictionary *contactMetaData;
 
+/**
+ *  Filter term. If set, no search bar will be added, but only FAQs matching the filter term will be shown.
+ */
+@property (nonatomic, strong) NSString *filterTerm;
+
 @end

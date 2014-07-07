@@ -43,7 +43,7 @@
     [super viewDidLoad];
     
     // Title
-    self.title = [@"FAQs" localizedString];
+    self.title = self.title ?: [@"FAQs" localizedString];
     
     // Setup our UI components
     [self setupFaqUI];
@@ -79,12 +79,15 @@
 
 - (void)setupFaqUI
 {
-    // Search bar
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
-    self.searchBar.delegate = self;
-    self.searchBar.placeholder = [@"Search..." localizedString];
-    self.tableView.tableHeaderView = self.searchBar;
+    if (!self.filterTerm) {
+        // Search bar
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
+        self.searchBar.delegate = self;
+        self.searchBar.placeholder = [@"Search..." localizedString];
+        self.tableView.tableHeaderView = self.searchBar;
+    }
     
+
     // Nav buttons
     if (!self.hideContactButton) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
@@ -104,11 +107,16 @@
     [ABXFaq fetch:^(NSArray *faqs, ABXResponseCode responseCode, NSInteger httpCode, NSError *error) {
         [self.activityView stopAnimating];
         if (responseCode == ABXResponseCodeSuccess) {
-            self.faqs = faqs;
-            self.filteredFaqs = faqs;
+            if (self.filterTerm) {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.question contains[cd] %@ OR SELF.answer contains[cd] %@", self.filterTerm, self.filterTerm];
+                self.faqs = [faqs filteredArrayUsingPredicate:predicate];
+            } else {
+                self.faqs = faqs;
+            }
+            self.filteredFaqs = self.faqs;
             [self.tableView reloadData];
             
-            if (faqs.count == 0) {
+            if (self.faqs.count == 0) {
                 [self showError:[@"No FAQs" localizedString]];
             }
             else {
